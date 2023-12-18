@@ -1,5 +1,5 @@
 local rotation = {}
-local log4cc = require("log4cc")  -- Assuming log4cc is in the same folder
+local log4cc = require("log4cc")
 
 function rotation.getAbsoluteOrientation()
     log4cc.info("Getting absolute rotation")
@@ -37,9 +37,9 @@ end
 function rotation.rotateTowards(desiredOrientation, currentOrientation)
     log4cc.info("Rotating towards " .. desiredOrientation)
     while currentOrientation ~= desiredOrientation do
-        -- log4cc.info("Current rotation " .. getOrientation())
-        -- log4cc.info("\tDesired=" .. desiredOrientation)
-        -- log4cc.info("\tDiff=" .. desiredOrientation - getOrientation())
+        -- log4cc.debug("Current rotation " .. getOrientation())
+        -- log4cc.debug("\tDesired=" .. desiredOrientation)
+        -- log4cc.debug("\tDiff=" .. desiredOrientation - getOrientation())
         rotation.turnRight()
     end
     log4cc.info("Achieved rotation")

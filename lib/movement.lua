@@ -1,9 +1,11 @@
 local log4cc = require("log4cc")
 local inventory = require("inventory")
+local rotation = require("rotation")
+local utils    = require("utils")
 local movement = {}
 
 function movement.MineToX(TargetX)
-    local x, y, z = GetPos()
+    local x, y, z = movement.GetPos()
     log4cc.info("Currently at x=" .. x)
     log4cc.info("Going to target x=" .. TargetX)
 
@@ -12,23 +14,23 @@ function movement.MineToX(TargetX)
         return
     end
 
-    local desiredOrientation = sign(TargetX - x) + 2
+    local desiredOrientation = utils.sign(TargetX - x) + 2
     if desiredOrientation == 2 then
         log4cc.info("Arrived at x=" .. TargetX)
         return -- we are already at the correct X
     end
-    RotateTowards(desiredOrientation)
+    rotation.RotateTowards(desiredOrientation)
 
-    while sign(TargetX - x) ~= 0 do
-        DigMove()
-        x, y, z = GetPos()
+    while utils.sign(TargetX - x) ~= 0 do
+        movement.DigMove()
+        x, y, z = movement.GetPos()
     end
 
     log4cc.info("Arrived at x=" .. TargetX)
 end
 
 function movement.MineToZ(TargetZ)
-    local x, y, z = GetPos()
+    local x, y, z = movement.GetPos()
     log4cc.info("Currently at z=" .. z)
     log4cc.info("Going to target z=" .. TargetZ)
 
@@ -37,18 +39,18 @@ function movement.MineToZ(TargetZ)
         return
     end
 
-    local desiredOrientation = sign(TargetZ - z) + 3
-    RotateTowards(desiredOrientation)
+    local desiredOrientation = utils.sign(TargetZ - z) + 3
+    rotation.RotateTowards(desiredOrientation)
 
-    while sign(TargetZ - z) ~= 0 do
-        DigMove()
-        x, y, z = GetPos()
+    while utils.sign(TargetZ - z) ~= 0 do
+        movement.DigMove()
+        x, y, z = movement.GetPos()
     end
     log4cc.info("Arrived at z=" .. TargetZ)
 end
 
 function movement.MineToY(TargetY)
-    local x, y, z = GetPos()
+    local x, y, z = movement.GetPos()
     log4cc.info("Currently at y=" .. y)
     log4cc.info("Going to target y=" .. TargetY)
 
@@ -57,12 +59,12 @@ function movement.MineToY(TargetY)
         return
     end
 
-    while sign(y - TargetY) ~= 0 do
+    while utils.sign(y - TargetY) ~= 0 do
         local MineFn = y > TargetY and turtle.digDown or turtle.digUp
         local DetectFn = y > TargetY and turtle.detectDown or turtle.detectUp
         local MoveFn = y > TargetY and turtle.down or turtle.up
 
-        Refuel()
+        inventory.Refuel()
         if DetectFn() then
             MineFn()
         end
@@ -73,10 +75,10 @@ function movement.MineToY(TargetY)
 end
 
 function movement.MineToPosition(TargetX, TargetY, TargetZ)
-    log4cc.info("Mining to position " .. CoordString(TargetX, TargetY, TargetZ))
-    MineToY(TargetY)
-    MineToX(TargetX)
-    MineToZ(TargetZ)
+    log4cc.info("Mining to position " .. utils.CoordString(TargetX, TargetY, TargetZ))
+    movement.MineToY(TargetY)
+    movement.MineToX(TargetX)
+    movement.MineToZ(TargetZ)
 end
 
 function movement.GetPos()
@@ -89,7 +91,7 @@ function movement.GetPos()
 end
 
 function movement.DigMove()
-    Refuel()
+    inventory.Refuel()
     if turtle.detect() then
         turtle.dig()
     end
