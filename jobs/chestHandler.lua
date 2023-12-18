@@ -43,6 +43,7 @@ movement.MineToPosition(startLoc)
 while true do
     movement.MineToPosition(locations.dumpChest)
     inventory.SuckAll(turtle.suckDown)
+    inventory.manageInventory()
     DumpItems()
 end
 

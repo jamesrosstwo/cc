@@ -1,5 +1,3 @@
--- test
-
 local log4cc = require("lib.log4cc")
 local inventory = {}
 
