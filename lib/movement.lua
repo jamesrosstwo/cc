@@ -1,6 +1,7 @@
 local log4cc = require("lib.log4cc")
 local inventory = require("lib.inventory")
 local rotation = require("lib.rotation")
+local locations = require("lib.locations")
 local utils    = require("lib.utils")
 local movement = {}
 
