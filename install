@@ -32,11 +32,20 @@ if file then
         -- Download the file
         downloadFile(line)
 
-        -- Move the file from the "jobs" folder to the working directory
+        -- Construct full source and destination paths
         local filename = fs.getName(line)
         local sourcePath = "jobs/" .. filename
         local destinationPath = filename
-        fs.move(sourcePath, destinationPath)
+        
+        -- Check if the source file exists
+        if fs.exists(sourcePath) then
+            -- Check if the destination file exists and delete it
+            if fs.exists(destinationPath) then
+                fs.delete(destinationPath)
+            end
+            -- Move the file from the source to the destination
+            fs.move(sourcePath, destinationPath)
+        end
         
         line = file.readLine()
     end

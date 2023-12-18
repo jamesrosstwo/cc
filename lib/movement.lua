@@ -110,7 +110,7 @@ function movement.DigMove()
 
 end
 
-function movement.returnHome()
+function movement.ReturnHome()
     log4cc.info("Returning Home")
     movement.MineToPosition(locations.chuteTop)
     rotation.RotateTowards(3) -- +x
@@ -119,7 +119,7 @@ function movement.returnHome()
     end
 end
 
-function movement.leaveHome()
+function movement.LeaveHome()
     log4cc.info("Leaving Home")
     movement.MineToPosition(locations.chuteTop)
 end
