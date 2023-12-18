@@ -9,7 +9,7 @@ echo "Adding changes to Git..."
 git add .
 
 # Check for changes; if none, exit
-if ! git diff --staged --exit-code; then
+if git diff --staged --exit-code; then
     echo "No changes to commit."
     exit 0
 fi
