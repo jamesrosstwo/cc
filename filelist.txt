@@ -1,3 +1,5 @@
+jobs/chestHandler.lua
+jobs/gotoChute.lua
 jobs/miner.lua
 lib/inventory.lua
 lib/locations.lua

@@ -70,5 +70,9 @@ function inventory.placeDown()
     return false
 end
 
+function inventory.emptyInventory()
+
+end
+
 
 return inventory

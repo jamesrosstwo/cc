@@ -110,4 +110,18 @@ function movement.DigMove()
 
 end
 
+function movement.returnHome()
+    log4cc.info("Returning Home")
+    movement.MineToPosition(locations.chuteTop)
+    rotation.RotateTowards(3) -- +x
+    while not turtle.detectDown() do
+        turtle.down()
+    end
+end
+
+function movement.leaveHome()
+    log4cc.info("Leaving Home")
+    movement.MineToPosition(locations.chuteTop)
+end
+
 return movement

@@ -17,20 +17,6 @@ function FindNewPath(StartRange, DesiredAlt)
     movement.MineToXYZ(x + px, DesiredAlt, z + pz)
 end
 
-function ReturnHome()
-    log4cc.info("Returning Home")
-    movement.MineToPosition(locations.chuteTop)
-    rotation.RotateTowards(3) -- +x
-    while not turtle.detectDown() do
-        turtle.down()
-    end
-end
-
-function LeaveHome()
-    log4cc.info("Leaving Home")
-    movement.MineToPosition(locations.chuteTop)
-end
-
 function MineBranchSegment(Orientation)
     log4cc.info("Mining New Branch Segment")
     movement.RotateTowards(Orientation)
@@ -69,7 +55,7 @@ local targetResource = args[1]
 local explorationRange = tonumber(args[2]) or 10
 
 log4cc.info("Beginning Mining Operation for " .. targetResource)
-LeaveHome()
+movement.LeaveHome()
 FindNewPath(explorationRange, resources.getAltitude(targetResource))
 MineBranches()
-ReturnHome()
+movement.ReturnHome()
