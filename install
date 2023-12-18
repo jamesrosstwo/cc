@@ -1,0 +1,21 @@
+local scripts = {
+    ["lib/inventory.lua"] = "JxAUTLSd",
+    ["lib/locations.lua"] = "cgyEwDSA",
+    ["lib/log4cc.lua"] = "tPKEyUF7",
+    ["lib/movement.lua"] = "kPriMyNN",
+    ["lib/resources.lua"] = "5Ms6Rz8U",
+    ["lib/rotation.lua"] = "r78WHE1x",
+    ["lib/utils.lua"] = "ztVBjbUX",
+    ["miner.lua"] = "MBgDpetQ",
+}
+
+if not fs.exists("lib") then
+    fs.makeDir("lib")
+end
+
+for path, id in pairs(scripts) do
+    if fs.exists(path) then
+        fs.delete(path)
+    end
+    shell.run("pastebin get " .. id .. " " .. path)
+end
