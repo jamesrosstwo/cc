@@ -1,8 +1,9 @@
-local log4cc = require "lib.log4cc"
+local log4cc = require("lib.log4cc")
 local movement = require("lib.movement")
 local rotation = require("lib.rotation")
 local utils = require("lib.utils")
 local resources = require("resources")
+local locations = require("locations")
 
 log4cc.config.file.enabled = true
 log4cc.config.file.fileName = "log.txt"
@@ -13,12 +14,12 @@ function FindNewPath(StartRange, DesiredAlt)
     local pz = math.random(-StartRange, StartRange)
     log4cc.info("Finding new path start: \n\t" .. utils.CoordString(px, pz, DesiredAlt))
     x, y, z = movement.GetPos()
-    movement.MineToPosition(x + px, DesiredAlt, z + pz)
+    movement.MineToXYZ(x + px, DesiredAlt, z + pz)
 end
 
 function ReturnHome()
     log4cc.info("Returning Home")
-    movement.MineToPosition(ChuteTopLocation.x, ChuteTopLocation.y, ChuteTopLocation.z)
+    movement.MineToPosition(locations.chuteTop)
     rotation.RotateTowards(3) -- +x
     while not turtle.detectDown() do
         turtle.down()
@@ -27,7 +28,7 @@ end
 
 function LeaveHome()
     log4cc.info("Leaving Home")
-    movement.MineToPosition(ChuteTopLocation.x, ChuteTopLocation.y, ChuteTopLocation.z)
+    movement.MineToPosition(locations.chuteTop)
 end
 
 function MineBranchSegment(Orientation)
@@ -41,7 +42,7 @@ function MineBranchSegment(Orientation)
     end
 
     log4cc.info("\t Returning")
-    movement.MineToPosition(sx, sy, sz)
+    movement.MineToXYZ(sx, sy, sz)
     rotation.RotateTowards(Orientation)
 
     log4cc.info("Extending for new branch")

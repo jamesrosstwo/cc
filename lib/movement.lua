@@ -69,16 +69,20 @@ function movement.MineToY(TargetY)
             MineFn()
         end
         MoveFn()
-        x, y, z = GetPos()
+        x, y, z = movement.GetPos()
     end
     log4cc.info("Arrived at y=" .. TargetY)
 end
 
-function movement.MineToPosition(TargetX, TargetY, TargetZ)
+function movement.MineToXYZ(TargetX, TargetY, TargetZ)
     log4cc.info("Mining to position " .. utils.CoordString(TargetX, TargetY, TargetZ))
     movement.MineToY(TargetY)
     movement.MineToX(TargetX)
     movement.MineToZ(TargetZ)
+end
+
+function movement.MineToPosition(pos)
+    movement.MineToXYZ(pos.x, pos.y, pos.z)
 end
 
 function movement.GetPos()
