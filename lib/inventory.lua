@@ -104,11 +104,9 @@ end
 
 function inventory.suckAll(suckFn)
     for slot = 1, 16 do
-        if inventory.isFuelSlot(inventory.slotMap[slot]) then
-            goto continue
+        if not inventory.isFuelSlot(inventory.slotMap[slot]) then
+            suckFn()
         end
-        suckFn()
-        ::continue::
     end
 end
 
