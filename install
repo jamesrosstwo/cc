@@ -31,6 +31,13 @@ if file then
         
         -- Download the file
         downloadFile(line)
+
+        -- Move the file from the "jobs" folder to the working directory
+        local filename = fs.getName(line)
+        local sourcePath = "jobs/" .. filename
+        local destinationPath = filename
+        fs.move(sourcePath, destinationPath)
+        
         line = file.readLine()
     end
     file.close()
