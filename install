@@ -1,21 +1,40 @@
-local scripts = {
-    ["lib/inventory.lua"] = "JxAUTLSd",
-    ["lib/locations.lua"] = "cgyEwDSA",
-    ["lib/log4cc.lua"] = "tPKEyUF7",
-    ["lib/movement.lua"] = "kPriMyNN",
-    ["lib/resources.lua"] = "5Ms6Rz8U",
-    ["lib/rotation.lua"] = "r78WHE1x",
-    ["lib/utils.lua"] = "ztVBjbUX",
-    ["miner.lua"] = "MBgDpetQ",
-}
+local user = "jamesrosstwo"
+local repository = "cc"
+local branch = "main"
+local fileListUrl = "https://raw.githubusercontent.com/" .. user .. "/" .. repository .. "/" .. branch .. "/filelist.txt"
 
-if not fs.exists("lib") then
-    fs.makeDir("lib")
-end
+-- Function to download a file from GitHub
+local function downloadFile(gitPath)
+    local url = "https://raw.githubusercontent.com/" .. user .. "/" .. repository .. "/" .. branch .. "/" .. gitPath
+    local filename = fs.getName(gitPath)
 
-for path, id in pairs(scripts) do
-    if fs.exists(path) then
-        fs.delete(path)
+    if fs.exists(gitPath) then
+        fs.delete(gitPath)
     end
-    shell.run("pastebin get " .. id .. " " .. path)
+
+    shell.run("wget", url, gitPath)
 end
+
+-- Download the file list
+downloadFile("filelist.txt")
+
+-- Read and process the file list
+local file = fs.open("filelist.txt", "r")
+if file then
+    local line = file.readLine()
+    while line do
+        -- Ensure the directory exists
+        local dir = line:match("(.+)/[^/]+%.lua$")
+        if dir and not fs.exists(dir) then
+            fs.makeDir(dir)
+        end
+        
+        -- Download the file
+        downloadFile(line)
+        line = file.readLine()
+    end
+    file.close()
+end
+
+-- Clean up
+fs.delete("filelist.txt")

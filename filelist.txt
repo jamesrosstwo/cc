@@ -1,0 +1,8 @@
+jobs/miner.lua
+lib/inventory.lua
+lib/locations.lua
+lib/log4cc.lua
+lib/movement.lua
+lib/resources.lua
+lib/rotation.lua
+lib/utils.lua
