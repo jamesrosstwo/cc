@@ -65,7 +65,7 @@ function movement.MineToY(TargetY)
         local DetectFn = y > TargetY and turtle.detectDown or turtle.detectUp
         local MoveFn = y > TargetY and turtle.down or turtle.up
 
-        inventory.Refuel()
+        inventory.refuel()
         if DetectFn() then
             MineFn()
         end
@@ -96,7 +96,7 @@ function movement.GetPos()
 end
 
 function movement.DigMove()
-    inventory.Refuel()
+    inventory.refuel()
     if turtle.detect() then
         turtle.dig()
     end
