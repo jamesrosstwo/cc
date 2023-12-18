@@ -4,7 +4,7 @@ local branch = "main"
 
 -- Function to download a file from GitHub
 local function downloadFile(gitPath)
-    local url = "https://raw.githubusercontent.com/" .. user .. "/" .. repository .. "/" .. branch .. "/" .. gitPath .. "?t=" .. os.epoch("utc")
+    local url = "https://raw.githubusercontent.com/" .. user .. "/" .. repository .. "/" .. branch .. "/" .. gitPath
 
     if fs.exists(gitPath) then
         fs.delete(gitPath)
