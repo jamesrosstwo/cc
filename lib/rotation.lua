@@ -1,7 +1,7 @@
 local rotation = {}
 local log4cc = require("lib.log4cc")
 
-function rotation.getAbsoluteOrientation()
+function rotation.GetAbsoluteOrientation()
     log4cc.info("Getting absolute rotation")
     local loc1 = vector.new(gps.locate(2, false))
     if not turtle.forward() then
@@ -18,7 +18,7 @@ function rotation.getAbsoluteOrientation()
     return math.floor((heading.x + math.abs(heading.x) * 2) + (heading.z + math.abs(heading.z) * 3))
 end
 
-rotation.orientation = rotation.getAbsoluteOrientation()  -- Initialize orientation
+rotation.orientation = rotation.GetAbsoluteOrientation()  -- Initialize orientation
 
 function rotation.GetOrientation()
     return rotation.orientation
