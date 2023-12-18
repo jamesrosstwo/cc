@@ -1,4 +1,4 @@
-local log4cc = require("log4cc")
+local log4cc = require("lib.log4cc")
 local inventory = {}
 
 inventory.slotMap = {

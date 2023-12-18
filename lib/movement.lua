@@ -1,7 +1,7 @@
-local log4cc = require("log4cc")
-local inventory = require("inventory")
-local rotation = require("rotation")
-local utils    = require("utils")
+local log4cc = require("lib.log4cc")
+local inventory = require("lib.inventory")
+local rotation = require("lib.rotation")
+local utils    = require("lib.utils")
 local movement = {}
 
 function movement.MineToX(TargetX)

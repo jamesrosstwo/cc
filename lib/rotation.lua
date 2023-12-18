@@ -1,5 +1,5 @@
 local rotation = {}
-local log4cc = require("log4cc")
+local log4cc = require("lib.log4cc")
 
 function rotation.getAbsoluteOrientation()
     log4cc.info("Getting absolute rotation")
