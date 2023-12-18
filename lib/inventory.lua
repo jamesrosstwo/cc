@@ -5,10 +5,23 @@ local inventory = {}
 
 inventory.slotMap = {
     [1] = "minecraft:coal",
-    [2] = "minecraft:coal",
-    [3] = "minecraft:cobbled_deepslate",
-    [4] = "minecraft:cobblestone"
+    [2] = "minecraft:cobbled_deepslate",
+    [3] = "minecraft:cobblestone"
 }
+
+function inventory.isFuelSlot(itemName)
+    local fuelItems = {
+        "minecraft:coal",
+    }
+    
+    for _, fuelItem in pairs(fuelItems) do
+        if itemName == fuelItem then
+            return true
+        end
+    end
+    
+    return false
+end
 
 function inventory.manageInventory()
     for slot = 1, 16 do
@@ -70,9 +83,35 @@ function inventory.placeDown()
     return false
 end
 
-function inventory.emptyInventory()
-
+function inventory.emptyInventory(dropFn)
+    for slot = 1, 16 do
+        local itemDetails = turtle.getItemDetail(slot)
+        if itemDetails then
+            local itemFound = false
+            for targetSlot, itemType in pairs(inventory.slotMap) do
+                if itemDetails.name == itemType then
+                    itemFound = true
+                    break
+                end
+            end
+            if not itemFound then
+                dropFn()
+            end
+        end
+    end
 end
+
+
+function inventory.suckAll(suckFn)
+    for slot = 1, 16 do
+        if inventory.isFuelSlot(inventory.slotMap[slot]) then
+            goto continue
+        end
+        suckFn()
+        ::continue::
+    end
+end
+
 
 
 return inventory

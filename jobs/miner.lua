@@ -6,8 +6,9 @@ local log4cc = require("lib.log4cc")
 local movement = require("lib.movement")
 local rotation = require("lib.rotation")
 local utils = require("lib.utils")
-local resources = require("resources")
-local locations = require("locations")
+local resources = require("lib.resources")
+local locations = require("lib.locations")
+local inventory = require("lib.inventory")
 
 log4cc.config.file.enabled = true
 log4cc.config.file.fileName = "log.txt"
@@ -52,6 +53,12 @@ function MineBranches()
     log4cc.info("Fuel low. Ending branch mining.")
 end
 
+function Dump()
+    log4cc.info("Dumping items")
+    movement.MineToPosition(locations.dumpChest + vector.new(0, 1, 0))
+    inventory.emptyInventory(turtle.dropDown)
+end
+
 
 -- Main execution
 local args = {...}
@@ -62,4 +69,5 @@ log4cc.info("Beginning Mining Operation for " .. targetResource)
 movement.LeaveHome()
 FindNewPath(explorationRange, resources.getAltitude(targetResource))
 MineBranches()
+Dump()
 movement.ReturnHome()
