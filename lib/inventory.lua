@@ -21,7 +21,7 @@ function inventory.isFuelSlot(itemName)
     return false
 end
 
-function inventory.manageInventory()
+function inventory.ManageInventory()
     for slot = 1, 16 do
         if turtle.getItemCount(slot) > 0 then
             local data = turtle.getItemDetail(slot)
@@ -48,7 +48,7 @@ function inventory.manageInventory()
 end
 
 
-function inventory.refuel()
+function inventory.Refuel()
     for slot, itemType in pairs(inventory.slotMap) do
         if itemType == "minecraft:coal" then
             turtle.select(slot)
@@ -63,7 +63,7 @@ function inventory.refuel()
 end
 
 
-function inventory.placeDown()
+function inventory.PlaceDown()
     if not turtle.detectDown() then
         local deepslateSlot = 3
         local cobblestoneSlot = 4
@@ -81,7 +81,7 @@ function inventory.placeDown()
     return false
 end
 
-function inventory.emptyInventory(dropFn)
+function inventory.EmptyInventory(dropFn)
     for slot = 1, 16 do
         local itemDetails = turtle.getItemDetail(slot)
         if itemDetails then
@@ -100,7 +100,7 @@ function inventory.emptyInventory(dropFn)
 end
 
 
-function inventory.suckAll(suckFn)
+function inventory.SuckAll(suckFn)
     for slot = 1, 16 do
         if not inventory.isFuelSlot(inventory.slotMap[slot]) then
             suckFn()

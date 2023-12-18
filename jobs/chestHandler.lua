@@ -16,7 +16,7 @@ local chestOffset = vector.new(0, 1, 0)
 local startLoc = locations.chestsStart + chestOffset
 
 function DumpItems()
-    inventory.refuel()
+    inventory.Refuel()
     for slot = 1, 16 do
         local itemDetails = turtle.getItemDetail(slot)
         
@@ -43,7 +43,7 @@ movement.MineToPosition(startLoc)
 while true do
     movement.MineToPosition(locations.dumpChest + vector.new(-1, 1, 0))
     inventory.SuckAll(turtle.suckDown)
-    inventory.manageInventory()
+    inventory.ManageInventory()
     DumpItems()
 end
 

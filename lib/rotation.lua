@@ -20,27 +20,27 @@ end
 
 rotation.orientation = rotation.getAbsoluteOrientation()  -- Initialize orientation
 
-function rotation.getOrientation()
+function rotation.GetOrientation()
     return rotation.orientation
 end
 
-function rotation.turnRight()
+function rotation.TurnRight()
     turtle.turnRight()
     rotation.orientation = rotation.orientation % 4 + 1
 end
 
-function rotation.turnLeft()
+function rotation.TurnLeft()
     turtle.turnLeft()
     rotation.orientation = (rotation.orientation + 2) % 4 + 1
 end
 
-function rotation.rotateTowards(desiredOrientation, currentOrientation)
+function rotation.RotateTowards(desiredOrientation, currentOrientation)
     log4cc.info("Rotating towards " .. desiredOrientation)
     while currentOrientation ~= desiredOrientation do
         -- log4cc.debug("Current rotation " .. getOrientation())
         -- log4cc.debug("\tDesired=" .. desiredOrientation)
         -- log4cc.debug("\tDiff=" .. desiredOrientation - getOrientation())
-        rotation.turnRight()
+        rotation.TurnRight()
     end
     log4cc.info("Achieved rotation")
 end

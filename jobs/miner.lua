@@ -37,7 +37,7 @@ function MineBranchSegment(Orientation)
     rotation.RotateTowards(Orientation)
 
     log4cc.info("Extending for new branch")
-    rotation.turnRight()
+    rotation.TurnRight()
     for i = 1, 4 do
         movement.DigMove()
     end
@@ -46,7 +46,7 @@ end
 
 function MineBranches()
     log4cc.info("Beginning to mine branches.")
-    local StartOrientation = rotation.getOrientation()
+    local StartOrientation = rotation.GetOrientation()
     while turtle.getFuelLevel() >= (turtle.getFuelLimit() / 10) do
         MineBranchSegment(StartOrientation)
     end
@@ -56,7 +56,7 @@ end
 function Dump()
     log4cc.info("Dumping items")
     movement.MineToPosition(locations.dumpChest + vector.new(0, 1, 0))
-    inventory.emptyInventory(turtle.dropDown)
+    inventory.EmptyInventory(turtle.dropDown)
 end
 
 
@@ -67,7 +67,7 @@ local explorationRange = tonumber(args[2]) or 10
 
 log4cc.info("Beginning Mining Operation for " .. targetResource)
 movement.LeaveHome()
-FindNewPath(explorationRange, resources.getAltitude(targetResource))
+FindNewPath(explorationRange, resources.GetAltitude(targetResource))
 MineBranches()
 Dump()
 movement.ReturnHome()

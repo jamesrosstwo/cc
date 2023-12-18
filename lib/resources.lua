@@ -7,7 +7,7 @@ resources.altitudes = {
     coal = 60
 }
 
-function resources.getAvailableResources()
+function resources.GetAvailableResources()
     local names = {}
     for name in pairs(resources.altitudes) do
         table.insert(names, name)
@@ -15,10 +15,10 @@ function resources.getAvailableResources()
     return table.concat(names, ", ")
 end
 
-function resources.getAltitude(targetResource)
+function resources.GetAltitude(targetResource)
     -- Validate input
     if not resources.altitudes[targetResource] then
-        log4cc.info("Invalid resource name. Please enter one of the following: " .. resources.getAvailableResources())
+        log4cc.info("Invalid resource name. Please enter one of the following: " .. resources.GetAvailableResources())
         return
     end
 

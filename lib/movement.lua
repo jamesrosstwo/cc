@@ -15,14 +15,14 @@ function movement.MineToX(TargetX)
         return
     end
 
-    local desiredOrientation = utils.sign(TargetX - x) + 2
+    local desiredOrientation = utils.Sign(TargetX - x) + 2
     if desiredOrientation == 2 then
         log4cc.info("Arrived at x=" .. TargetX)
         return -- we are already at the correct X
     end
     rotation.RotateTowards(desiredOrientation)
 
-    while utils.sign(TargetX - x) ~= 0 do
+    while utils.Sign(TargetX - x) ~= 0 do
         movement.DigMove()
         x, y, z = movement.GetPos()
     end
@@ -40,10 +40,10 @@ function movement.MineToZ(TargetZ)
         return
     end
 
-    local desiredOrientation = utils.sign(TargetZ - z) + 3
+    local desiredOrientation = utils.Sign(TargetZ - z) + 3
     rotation.RotateTowards(desiredOrientation)
 
-    while utils.sign(TargetZ - z) ~= 0 do
+    while utils.Sign(TargetZ - z) ~= 0 do
         movement.DigMove()
         x, y, z = movement.GetPos()
     end
@@ -60,12 +60,12 @@ function movement.MineToY(TargetY)
         return
     end
 
-    while utils.sign(y - TargetY) ~= 0 do
+    while utils.Sign(y - TargetY) ~= 0 do
         local MineFn = y > TargetY and turtle.digDown or turtle.digUp
         local DetectFn = y > TargetY and turtle.detectDown or turtle.detectUp
         local MoveFn = y > TargetY and turtle.down or turtle.up
 
-        inventory.refuel()
+        inventory.Refuel()
         if DetectFn() then
             MineFn()
         end
@@ -96,7 +96,7 @@ function movement.GetPos()
 end
 
 function movement.DigMove()
-    inventory.refuel()
+    inventory.Refuel()
     if turtle.detect() then
         turtle.dig()
     end
@@ -107,7 +107,7 @@ function movement.DigMove()
         turtle.digUp()
     end
     
-    inventory.placeDown()
+    inventory.PlaceDown()
 
 end
 
