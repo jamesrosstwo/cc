@@ -50,6 +50,9 @@ function movement.MineToZ(TargetZ)
     log4cc.info("Arrived at z=" .. TargetZ)
 end
 
+
+function DigStairdown()
+
 function movement.MineToY(TargetY)
     local x, y, z = movement.GetPos()
     log4cc.info("Currently at y=" .. y)
@@ -59,6 +62,8 @@ function movement.MineToY(TargetY)
         log4cc.info("Arrived at y=" .. TargetY)
         return
     end
+
+    StairDig = y > TargetY and movement.DigStairdown or movement.DigStairUp
 
     while utils.Sign(y - TargetY) ~= 0 do
         local MineFn = y > TargetY and turtle.digDown or turtle.digUp
