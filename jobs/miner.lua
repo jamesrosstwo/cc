@@ -24,7 +24,7 @@ end
 
 function MineBranchSegment(Orientation)
     log4cc.info("Mining New Branch Segment")
-    movement.RotateTowards(Orientation)
+    rotation.RotateTowards(Orientation)
     local sx, sy, sz = movement.GetPos()
 
     log4cc.info("\t Digging Phase")
