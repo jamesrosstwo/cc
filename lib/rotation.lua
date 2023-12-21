@@ -1,6 +1,5 @@
 local rotation = {}
 local log4cc = require("lib.log4cc")
-local movement = require("movement")
 
 
 --[[orientation will be:
@@ -12,7 +11,17 @@ local movement = require("movement")
 function rotation.GetAbsoluteOrientation()
     log4cc.info("Getting absolute rotation")
     local loc1 = vector.new(gps.locate(2, false))
-    movement.DigMove()
+    if not turtle.forward() then
+        for j = 1, 6 do
+            if not turtle.forward() then
+                turtle.dig()
+            else
+                break
+            end
+        end
+    else
+        turtle.back()
+    end
     local loc2 = vector.new(gps.locate(2, false))
     local heading = loc2 - loc1
     return math.floor((heading.x + math.abs(heading.x) * 2) + (heading.z + math.abs(heading.z) * 3))
