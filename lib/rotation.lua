@@ -37,9 +37,9 @@ end
 function rotation.RotateTowards(desiredOrientation, currentOrientation)
     log4cc.info("Rotating towards " .. desiredOrientation)
     while currentOrientation ~= desiredOrientation do
-        -- log4cc.debug("Current rotation " .. getOrientation())
-        -- log4cc.debug("\tDesired=" .. desiredOrientation)
-        -- log4cc.debug("\tDiff=" .. desiredOrientation - getOrientation())
+        log4cc.debug("Current rotation " .. getOrientation())
+        log4cc.debug("\tDesired=" .. desiredOrientation)
+        log4cc.debug("\tDiff=" .. desiredOrientation - getOrientation())
         rotation.TurnRight()
     end
     log4cc.info("Achieved rotation")
