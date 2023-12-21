@@ -9,26 +9,39 @@ local log4cc = require("lib.log4cc")
 + z = 4
 ]]--
 function rotation.GetAbsoluteOrientation()
-    log4cc.info("Getting absolute rotation")
-    local loc1 = vector.new(gps.locate(2, false))
-    if not turtle.forward() then
-        for j = 1, 6 do
-            if not turtle.forward() then
-                turtle.dig()
-            else
-                break
-            end
-        end
-    else
-        turtle.back()
+    local x1, y1, z1 = gps.locate()
+    local blockDetected = turtle.detect()
+
+    if blockDetected then
+        turtle.select(16)
+        turtle.dig()
     end
-    local loc2 = vector.new(gps.locate(2, false))
-    local heading = loc2 - loc1
-    return math.floor((heading.x + math.abs(heading.x) * 2) + (heading.z + math.abs(heading.z) * 3))
+
+    turtle.forward()
+
+    local x2, y2, z2 = gps.locate()
+    turtle.back()
+
+    if blockDetected then
+        turtle.place()
+    end
+
+    if x2 > x1 then
+        return 2 -- +x
+    elseif x2 < x1 then
+        return 0 -- -x
+    elseif z2 > z1 then
+        return 3 -- +z
+    elseif z2 < z1 then
+        return 1 -- -z
+    else
+        return nil, "No change in position detected"
+    end
 end
 
-rotation._orientation = rotation.GetAbsoluteOrientation()  -- Initialize orientation
 
+rotation._orientation = rotation.GetAbsoluteOrientation()  -- Initialize orientation
+log4cc.info("current orientation " .. rotation._orientation)
 function rotation.GetOrientation()
     return rotation._orientation
 end
