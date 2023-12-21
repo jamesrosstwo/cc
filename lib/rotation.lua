@@ -31,14 +31,14 @@ function rotation.GetOrientation()
     return rotation.orientation
 end
 
-function turnRight()
-    rotation.TurnRight()
-    orientation = orientation % 4 + 1
+function rotation.TurnRight()
+    turtle.turnRight()
+    rotation.orientation = rotation.orientation % 4 + 1
 end
 
-function turnLeft()
-    rotation.TurnLeft()
-    orientation = (orientation + 2) % 4 + 1
+function rotation.TurnLeft()
+    turtle.turnLeft()
+    rotation.orientation = (rotation.orientation + 2) % 4 + 1
 end
 
 

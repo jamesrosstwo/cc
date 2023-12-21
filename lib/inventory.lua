@@ -55,6 +55,7 @@ function inventory.Refuel()
             while turtle.getItemCount(slot) > 0 and turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) do
                 if not turtle.refuel(1) then
                     log4cc.warn("Refueling slot " .. slot .. " filled with incorret item")
+                    inventory.ManageInventory()
                     break
                 end
             end
