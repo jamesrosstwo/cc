@@ -46,12 +46,12 @@ end
 
 
 
-function rotation.RotateTowards(desiredOrientation, currentOrientation)
+function rotation.RotateTowards(desiredOrientation)
     log4cc.info("Rotating towards " .. desiredOrientation)
     while rotation.GetOrientation() ~= desiredOrientation do
-        -- log4cc.info("Current rotation " .. rotation.GetOrientation())
-        -- log4cc.info("\tDesired=" .. desiredOrientation)
-        -- log4cc.info("\tDiff=" .. desiredOrientation - rotation.GetOrientation())
+        log4cc.info("Current rotation " .. rotation.GetOrientation())
+        log4cc.info("\tDesired=" .. desiredOrientation)
+        log4cc.info("\tDiff=" .. desiredOrientation - rotation.GetOrientation())
         rotation.TurnRight()
     end
     log4cc.info("Achieved rotation")
