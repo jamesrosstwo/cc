@@ -51,8 +51,9 @@ function movement.MineToZ(TargetZ)
 end
 
 function movement.DigStairDown(TargetY)
+    log4cc.info("Digging stair down")
     x, y, z = movement.GetPos()
-    while y ~= TargetY do
+    while y > TargetY do
         movement.DigMove()
         turtle.digDown()
         turtle.down()
@@ -62,8 +63,9 @@ function movement.DigStairDown(TargetY)
 end
 
 function movement.DigStairUp(TargetY)
+    log4cc.info("Digging stair up")
     x, y, z = movement.GetPos()
-    while y ~= TargetY do
+    while y < TargetY do
         movement.DigMove()
         turtle.up()
         turtle.digUp()
