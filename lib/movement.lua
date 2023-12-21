@@ -51,7 +51,7 @@ function movement.MineToZ(TargetZ)
 end
 
 
-function DigStairdown()
+-- function DigStairdown()
 
 function movement.MineToY(TargetY)
     local x, y, z = movement.GetPos()
