@@ -91,4 +91,8 @@ end
 
 --- Module body end ---
 
+log4cc.config.file.enabled = true
+log4cc.config.file.fileName = "log.txt"
+log4cc.config.remote.enabled = true
+
 return log4cc

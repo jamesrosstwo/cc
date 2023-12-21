@@ -28,7 +28,6 @@ function rotation.GetAbsoluteOrientation()
 end
 
 rotation._orientation = rotation.GetAbsoluteOrientation()  -- Initialize orientation
-log4cc.info("Starting orientation" .. rotation.GetOrientation())
 
 function rotation.GetOrientation()
     return rotation._orientation

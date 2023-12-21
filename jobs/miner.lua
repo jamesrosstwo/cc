@@ -1,7 +1,6 @@
 local script_dir = debug.getinfo(1).source:match("@(.*/)")
 package.path = package.path .. ";" .. script_dir .. "lib/?.lua"
 
-
 local log4cc = require("lib.log4cc")
 local movement = require("lib.movement")
 local rotation = require("lib.rotation")
@@ -9,10 +8,6 @@ local utils = require("lib.utils")
 local resources = require("lib.resources")
 local locations = require("lib.locations")
 local inventory = require("lib.inventory")
-
-log4cc.config.file.enabled = true
-log4cc.config.file.fileName = "log.txt"
-log4cc.config.remote.enabled = true
 
 function FindNewPath(StartRange, DesiredAlt)
     local px = math.random(-StartRange, StartRange)

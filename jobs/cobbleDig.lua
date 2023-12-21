@@ -4,10 +4,6 @@ package.path = package.path .. ";" .. script_dir .. "lib/?.lua"
 local log4cc = require("lib.log4cc")
 local inventory = require("lib.inventory")
 
-log4cc.config.file.enabled = true
-log4cc.config.file.fileName = "log.txt"
-log4cc.config.remote.enabled = true
-
 
 while true do
     inventory.Refuel()
