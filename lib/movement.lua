@@ -51,8 +51,6 @@ function movement.MineToZ(TargetZ)
 end
 
 
--- function DigStairdown()
-
 function movement.MineToY(TargetY)
     local x, y, z = movement.GetPos()
     log4cc.info("Currently at y=" .. y)
