@@ -4,9 +4,9 @@ local log4cc = require("lib.log4cc")
 
     --[[orientation will be:
     -x = 1
-         - z = 2
-               + x = 3
-                     + z = 4
+    - z = 2
+    + x = 3
+    + z = 4
     ]]--
 function rotation.GetAbsoluteOrientation()
     log4cc.info("Getting absolute rotation")
@@ -19,9 +19,12 @@ function rotation.GetAbsoluteOrientation()
                 break
             end
         end
+    else
+        turtle.back()
     end
     local loc2 = vector.new(gps.locate(2, false))
     local heading = loc2 - loc1
+    
     return math.floor((heading.x + math.abs(heading.x) * 2) + (heading.z + math.abs(heading.z) * 3))
 end
 
