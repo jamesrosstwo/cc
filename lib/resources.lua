@@ -4,7 +4,7 @@ local resources = {}
 resources.altitudes = {
     diamond = -59,
     iron = 16,
-    coal = 60
+    coal = 40
 }
 
 function resources.GetAvailableResources()
