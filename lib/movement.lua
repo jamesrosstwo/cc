@@ -82,7 +82,7 @@ function movement.MineToY(TargetY)
         return
     end
 
-    StairDig = y > TargetY and movement.DigStairdown or movement.DigStairUp
+    StairDig = y > TargetY and movement.DigStairDown or movement.DigStairUp
     StairDig(TargetY)
 
     log4cc.info("Arrived at y=" .. TargetY)
