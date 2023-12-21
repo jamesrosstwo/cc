@@ -11,7 +11,6 @@ log4cc.config.file.fileName = "log.txt"
 log4cc.config.remote.enabled = true
 
 log4cc.info("Organizing chests")
-movement.ReturnHome()
 local chestOffset = vector.new(0, 1, 0)
 local startLoc = locations.chestsStart + chestOffset
 

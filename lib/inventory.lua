@@ -7,7 +7,7 @@ inventory.slotMap = {
     [3] = "minecraft:cobblestone"
 }
 
-function inventory.isFuelSlot(itemName)
+function inventory.IsFuelSlot(itemName)
     local fuelItems = {
         "minecraft:coal",
     }
@@ -102,7 +102,7 @@ end
 
 function inventory.SuckAll(suckFn)
     for slot = 1, 16 do
-        if not inventory.isFuelSlot(inventory.slotMap[slot]) then
+        if not inventory.IsFuelSlot(inventory.slotMap[slot]) then
             suckFn()
         end
     end
