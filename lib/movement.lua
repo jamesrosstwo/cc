@@ -50,6 +50,27 @@ function movement.MineToZ(TargetZ)
     log4cc.info("Arrived at z=" .. TargetZ)
 end
 
+function movement.DigStairDown(TargetY)
+    x, y, z = movement.GetPos()
+    while y ~= TargetY do
+        movement.DigMove()
+        turtle.digDown()
+        turtle.down()
+        rotation.TurnRight()
+        x, y, z = movement.GetPos()
+    end
+end
+
+function movement.DigStairUp(TargetY)
+    x, y, z = movement.GetPos()
+    while y ~= TargetY do
+        movement.DigMove()
+        turtle.up()
+        turtle.digUp()
+        rotation.TurnLeft()
+        x, y, z = movement.GetPos()
+    end
+end
 
 function movement.MineToY(TargetY)
     local x, y, z = movement.GetPos()
@@ -62,19 +83,8 @@ function movement.MineToY(TargetY)
     end
 
     StairDig = y > TargetY and movement.DigStairdown or movement.DigStairUp
+    StairDig(TargetY)
 
-    while utils.Sign(y - TargetY) ~= 0 do
-        local MineFn = y > TargetY and turtle.digDown or turtle.digUp
-        local DetectFn = y > TargetY and turtle.detectDown or turtle.detectUp
-        local MoveFn = y > TargetY and turtle.down or turtle.up
-
-        inventory.Refuel()
-        if DetectFn() then
-            MineFn()
-        end
-        MoveFn()
-        x, y, z = movement.GetPos()
-    end
     log4cc.info("Arrived at y=" .. TargetY)
 end
 
