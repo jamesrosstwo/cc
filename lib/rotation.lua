@@ -27,13 +27,13 @@ function rotation.GetAbsoluteOrientation()
     end
 
     if x2 > x1 then
-        return 2 -- +x
+        return 3 -- +x
     elseif x2 < x1 then
-        return 0 -- -x
+        return 1 -- -x
     elseif z2 > z1 then
-        return 3 -- +z
+        return 4 -- +z
     elseif z2 < z1 then
-        return 1 -- -z
+        return 2 -- -z
     else
         return nil, "No change in position detected"
     end
