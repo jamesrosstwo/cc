@@ -27,20 +27,21 @@ function rotation.GetAbsoluteOrientation()
     return math.floor((heading.x + math.abs(heading.x) * 2) + (heading.z + math.abs(heading.z) * 3))
 end
 
-rotation.orientation = rotation.GetAbsoluteOrientation()  -- Initialize orientation
+rotation._orientation = rotation.GetAbsoluteOrientation()  -- Initialize orientation
+log4cc.info("Starting orientation" .. rotation.GetOrientation())
 
 function rotation.GetOrientation()
-    return rotation.orientation
+    return rotation._orientation
 end
 
 function rotation.TurnRight()
     turtle.turnRight()
-    rotation.orientation = rotation.orientation % 4 + 1
+    rotation._orientation = rotation._orientation % 4 + 1
 end
 
 function rotation.TurnLeft()
     turtle.turnLeft()
-    rotation.orientation = (rotation.orientation + 2) % 4 + 1
+    rotation._orientation = (rotation._orientation + 2) % 4 + 1
 end
 
 function rotation.RotateTowards(desiredOrientation)
