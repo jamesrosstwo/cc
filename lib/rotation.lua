@@ -1,6 +1,13 @@
 local rotation = {}
 local log4cc = require("lib.log4cc")
 
+
+    --[[orientation will be:
+    -x = 1
+         - z = 2
+               + x = 3
+                     + z = 4
+    ]]--
 function rotation.GetAbsoluteOrientation()
     log4cc.info("Getting absolute rotation")
     local loc1 = vector.new(gps.locate(2, false))
@@ -24,20 +31,21 @@ function rotation.GetOrientation()
     return rotation.orientation
 end
 
-function rotation.TurnRight()
-    turtle.turnRight()
-    rotation.orientation = (orientation + 1) % 4
+function turnRight()
+    rotation.TurnRight()
+    orientation = orientation % 4 + 1
 end
 
-function rotation.TurnLeft()
-    turtle.turnLeft()
-    rotation.orientation = (orientation + 3) % 4
+function turnLeft()
+    rotation.TurnLeft()
+    orientation = (orientation + 2) % 4 + 1
 end
+
 
 
 function rotation.RotateTowards(desiredOrientation, currentOrientation)
     log4cc.info("Rotating towards " .. desiredOrientation)
-    while currentOrientation ~= desiredOrientation do
+    while rotation.GetOrientation() ~= desiredOrientation do
         -- log4cc.info("Current rotation " .. rotation.GetOrientation())
         -- log4cc.info("\tDesired=" .. desiredOrientation)
         -- log4cc.info("\tDiff=" .. desiredOrientation - rotation.GetOrientation())
