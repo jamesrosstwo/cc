@@ -24,16 +24,16 @@ resources.OreIDs = {
 }
 
 resources.ValuableMaterials = {
-    "minecraft:raw_iron",
-    "minecraft:raw_copper",
-    "minecraft:raw_gold",
-    "minecraft:diamond",
-    "minecraft:emerald",
-    "minecraft:lapis_lazuli",
-    "minecraft:redstone",
-    "minecraft:coal",
-    "minecraft:quartz",
-    "minecraft:ancient_debris",
+    ["minecraft:raw_iron"] = true,
+    ["minecraft:raw_copper"] = true,
+    ["minecraft:raw_gold"] = true,
+    ["minecraft:diamond"] = true,
+    ["minecraft:emerald"] = true,
+    ["minecraft:lapis_lazuli"] = true,
+    ["minecraft:redstone"] = true,
+    ["minecraft:coal"] = true,
+    ["minecraft:quartz"] = true,
+    ["minecraft:ancient_debris"] = true
 }
 
 resources.Altitudes = {
