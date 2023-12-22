@@ -2,23 +2,26 @@ local log4cc = require("lib.log4cc")
 local resources = require("lib.resources")
 local inventory = {}
 
+inventory.valuableSlot = "valuable"
+inventory.anySlot = "any"
+
 inventory.slotMap = {
     [1] = "minecraft:coal",
     [2] = "minecraft:cobbled_deepslate",
     [3] = "minecraft:cobblestone",
-    [4] = "valuable",
-    [5] = "valuable",
-    [6] = "valuable",
-    [7] = "valuable",
-    [8] = "valuable",
-    [9] = "valuable",
-    [10] = "valuable",
-    [11] = "valuable",
-    [12] = "valuable",
-    [13] = "any",
-    [14] = "any",
-    [15] = "any",
-    [16] = "any"
+    [4] = inventory.valuableSlot,
+    [5] = inventory.valuableSlot,
+    [6] = inventory.valuableSlot,
+    [7] = inventory.valuableSlot,
+    [8] = inventory.valuableSlot,
+    [9] = inventory.valuableSlot,
+    [10] = inventory.valuableSlot,
+    [11] = inventory.valuableSlot,
+    [12] = inventory.valuableSlot,
+    [13] = inventory.anySlot,
+    [14] = inventory.anySlot,
+    [15] = inventory.anySlot,
+    [16] = inventory.anySlot
 }
 
 function inventory.IsFuelSlot(itemName)
@@ -46,6 +49,7 @@ function inventory.ManageInventory()
             local itemType = data.name
 
             if resources.ValuableMaterials[itemType] then
+                log4cc.info("Item type " .. itemType .. " is valuable")
                 itemType = "valuable"
             end
 
@@ -57,7 +61,7 @@ function inventory.ManageInventory()
             if not foundSlot then
                 for targetSlot, targetSlotType in pairs(inventory.slotMap) do
                     log4cc.info("checking slot " .. slot .. ", " .. targetSlot .. ": " .. targetSlotType .. ", item " .. itemType)
-                    if slot ~= targetSlot and (targetSlotType == "any" or itemType == targetSlotType) then
+                    if slot ~= targetSlot and (targetSlotType == inventory.anySlot or itemType == targetSlotType) then
                         if turtle.transferTo(targetSlot) then
                             foundSlot = true
                             break
