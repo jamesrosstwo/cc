@@ -50,27 +50,37 @@ function movement.MineToZ(TargetZ)
     log4cc.info("Arrived at z=" .. TargetZ)
 end
 
-function movement.DigStairDown(TargetY)
+function movement.DigStairDown(TargetY, shouldPlace)
+    if shouldPlace == nil then
+        shouldPlace = true
+    end
     log4cc.info("Digging stair down")
     x, y, z = movement.GetPos()
     while y > TargetY do
         movement.DigMove(false)
         turtle.digDown()
         turtle.down()
-        inventory.PlaceDown()
+        if shouldPlace then
+            inventory.PlaceDown()
+        end
         rotation.TurnRight()
         x, y, z = movement.GetPos()
     end
 end
 
-function movement.DigStairUp(TargetY)
+function movement.DigStairUp(TargetY, shouldPlace)
+    if shouldPlace == nil then
+        shouldPlace = true
+    end
     log4cc.info("Digging stair up")
     x, y, z = movement.GetPos()
     while y < TargetY do
         movement.DigMove()
         turtle.up()
         turtle.digUp()
-        inventory.PlaceDown()
+        if shouldPlace then
+            inventory.PlaceDown()
+        end
         rotation.TurnLeft()
         x, y, z = movement.GetPos()
     end
