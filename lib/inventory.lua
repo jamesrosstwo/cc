@@ -61,7 +61,7 @@ function inventory.ManageInventory()
             if not foundSlot then
                 for targetSlot, targetSlotType in pairs(inventory.slotMap) do
                     log4cc.info("checking slot " .. slot .. ", " .. targetSlot .. ": " .. targetSlotType .. ", item " .. itemType)
-                    if slot ~= targetSlot and (targetSlotType == inventory.anySlot or itemType == targetSlotType) then
+                    if slot ~= targetSlot and (targetSlotType == inventory.anySlot or itemType == targetSlotType or data.name == targetSlotType) then
                         if turtle.transferTo(targetSlot) then
                             foundSlot = true
                             break
