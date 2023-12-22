@@ -79,9 +79,16 @@ end
 local args = {...}
 local targetResource = args[1] or "diamond"
 local explorationRange = tonumber(args[2]) or 10
+local inHome = true
+if args[2] ~= nil then
+    inHome = args[2] == "true"
+end
+
 
 log4cc.info("Beginning Mining Operation for " .. targetResource)
-movement.LeaveHome()
+if inHome then
+    movement.LeaveHome()
+end
 FindNewPath(explorationRange, resources.GetAltitude(targetResource))
 MineBranches()
 Dump()

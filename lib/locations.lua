@@ -2,7 +2,7 @@ local locations = {}
 
 locations.home = vector.new(-168, -23, 237)
 locations.chuteTop = vector.new(-168, -16, 237)
-locations.chestsStart = vector.new(-154, -23, 240)
+locations.chestsStart = vector.new(-152, -23, 240)
 locations.numChests = 14
 locations.dumpChest = vector.new(-154, -23, 242)
 
