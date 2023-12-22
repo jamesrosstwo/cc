@@ -13,39 +13,50 @@ inventory.slotMap = {
     [8] = "valuable",
     [9] = "valuable",
     [10] = "valuable",
-    [11] = "valuable"
+    [11] = "valuable",
+    [12] = "valuable",
+    [13] = "any",
+    [14] = "any",
+    [15] = "any",
+    [16] = "any"
 }
 
 function inventory.IsFuelSlot(itemName)
     local fuelItems = {
         "minecraft:coal",
     }
-    
+
     for _, fuelItem in pairs(fuelItems) do
         if itemName == fuelItem then
             return true
         end
     end
-    
+
     return false
 end
 
 function inventory.ManageInventory()
     for slot = 1, 16 do
+        turtle.select(slot)
+        local currentSlotType = inventory.slotMap[slot]
         if turtle.getItemCount(slot) > 0 then
             local data = turtle.getItemDetail(slot)
             local foundSlot = false
 
             local itemType = data.name
-            
+
             if resources.ValuableMaterials[itemType] then
                 itemType = "valuable"
             end
 
-            for targetSlot, slotType in pairs(inventory.slotMap) do
-                if itemType == slotType then
-                    if turtle.getItemSpace(targetSlot) > 0 or slot == targetSlot then
-                        turtle.select(slot)
+            if itemType == currentSlotType then
+                foundSlot = true
+            end
+
+
+            if not foundSlot then
+                for targetSlot, targetSlotType in pairs(inventory.slotMap) do
+                    if slot ~= targetSlot and itemType == targetSlotType then
                         if turtle.transferTo(targetSlot) then
                             foundSlot = true
                             break
@@ -54,7 +65,7 @@ function inventory.ManageInventory()
                 end
             end
 
-            -- Drop items if they don't fit in their designated slot
+            -- Drop items if they don't fit in their designated slots
             if not foundSlot then
                 turtle.select(slot)
                 turtle.drop()
@@ -62,7 +73,6 @@ function inventory.ManageInventory()
         end
     end
 end
-
 
 function inventory.Refuel()
     for slot, itemType in pairs(inventory.slotMap) do
@@ -78,7 +88,6 @@ function inventory.Refuel()
         end
     end
 end
-
 
 function inventory.PlaceDown()
     if not turtle.detectDown() then
@@ -116,7 +125,6 @@ function inventory.EmptyInventory(dropFn)
     end
 end
 
-
 function inventory.SuckAll(suckFn)
     for slot = 1, 16 do
         if not inventory.IsFuelSlot(inventory.slotMap[slot]) then
@@ -124,7 +132,6 @@ function inventory.SuckAll(suckFn)
         end
     end
 end
-
 
 function inventory.IsFull()
     for slot = 1, 16 do
@@ -135,6 +142,5 @@ function inventory.IsFull()
     end
     return true
 end
-
 
 return inventory
