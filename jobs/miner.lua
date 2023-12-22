@@ -25,6 +25,22 @@ function MineBranchSegment(Orientation)
     log4cc.info("\t Digging Phase")
     for i = 1, 20 do
         movement.DigMove()
+        local success, data = turtle.inspectUp()
+        local sPos = movement.GetPos()
+        while success and resources.OreIDs[data.name] do
+            turtle.digUp()
+            turtle.up()
+            success, data = turtle.inspectUp()
+        end
+        movement.MineToPosition(sPos)
+
+        success, data = turtle.inspectDown()
+        while success and resources.OreIDs[data.name] do
+            turtle.digDown()
+            turtle.down()
+            success, data = turtle.inspectDown()
+        end
+        movement.MineToPosition(sPos)
     end
 
     log4cc.info("\t Returning")
@@ -37,6 +53,7 @@ function MineBranchSegment(Orientation)
         movement.DigMove()
     end
     rotation.RotateTowards(Orientation)
+    inventory.ManageInventory()
 end
 
 function MineBranches()

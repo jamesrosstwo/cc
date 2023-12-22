@@ -1,6 +1,28 @@
 local log4cc = require("lib.log4cc")
 local resources = {}
 
+
+local oreIDs = {
+    ["minecraft:gold_ore"] = true,
+    ["minecraft:iron_ore"] = true,
+    ["minecraft:coal_ore"] = true,
+    ["minecraft:lapis_ore"] = true,
+    ["minecraft:diamond_ore"] = true,
+    ["minecraft:redstone_ore"] = true,
+    ["minecraft:emerald_ore"] = true,
+    ["minecraft:nether_gold_ore"] = true,
+    ["minecraft:ancient_debris"] = true,
+    ["minecraft:copper_ore"] = true,
+    ["minecraft:deepslate_coal_ore"] = true,
+    ["minecraft:deepslate_copper_ore"] = true,
+    ["minecraft:deepslate_diamond_ore"] = true,
+    ["minecraft:deepslate_emerald_ore"] = true,
+    ["minecraft:deepslate_gold_ore"] = true,
+    ["minecraft:deepslate_iron_ore"] = true,
+    ["minecraft:deepslate_lapis_ore"] = true,
+    ["minecraft:deepslate_redstone_ore"] = true,
+}
+
 resources.altitudes = {
     diamond = -59,
     iron = 16,
