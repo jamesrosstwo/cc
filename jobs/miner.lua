@@ -78,11 +78,13 @@ end
 -- Main execution
 local args = {...}
 local targetResource = args[1] or "diamond"
-local explorationRange = tonumber(args[2]) or 10
+
 local inHome = true
 if args[2] ~= nil then
     inHome = args[2] == "true"
 end
+
+local explorationRange = tonumber(args[3]) or 10
 
 
 log4cc.info("Beginning Mining Operation for " .. targetResource)
