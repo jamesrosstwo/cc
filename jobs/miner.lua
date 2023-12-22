@@ -61,6 +61,9 @@ function MineBranches()
     local StartOrientation = rotation.GetOrientation()
     while turtle.getFuelLevel() >= (turtle.getFuelLimit() / 10) do
         MineBranchSegment(StartOrientation)
+        if inventory.IsFull() then
+            return
+        end
     end
     log4cc.info("Fuel low. Ending branch mining.")
 end
