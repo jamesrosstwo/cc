@@ -2,7 +2,7 @@ local log4cc = require("lib.log4cc")
 local resources = {}
 
 
-local oreIDs = {
+resources.OreIDs = {
     ["minecraft:gold_ore"] = true,
     ["minecraft:iron_ore"] = true,
     ["minecraft:coal_ore"] = true,

@@ -7,17 +7,17 @@ local movement = {}
 
 function movement.MineToX(TargetX)
     local x, y, z = movement.GetPos()
-    log4cc.info("Currently at x=" .. x)
-    log4cc.info("Going to target x=" .. TargetX)
+    log4cc.debug("Currently at x=" .. x)
+    log4cc.debug("Going to target x=" .. TargetX)
 
     if x == TargetX then
-        log4cc.info("Arrived at x=" .. TargetX)
+        log4cc.debug("Arrived at x=" .. TargetX)
         return
     end
 
     local desiredOrientation = utils.Sign(TargetX - x) + 2
     if desiredOrientation == 2 then
-        log4cc.info("Arrived at x=" .. TargetX)
+        log4cc.debug("Arrived at x=" .. TargetX)
         return -- we are already at the correct X
     end
     rotation.RotateTowards(desiredOrientation)
@@ -27,16 +27,16 @@ function movement.MineToX(TargetX)
         x, y, z = movement.GetPos()
     end
 
-    log4cc.info("Arrived at x=" .. TargetX)
+    log4cc.debug("Arrived at x=" .. TargetX)
 end
 
 function movement.MineToZ(TargetZ)
     local x, y, z = movement.GetPos()
-    log4cc.info("Currently at z=" .. z)
-    log4cc.info("Going to target z=" .. TargetZ)
+    log4cc.debug("Currently at z=" .. z)
+    log4cc.debug("Going to target z=" .. TargetZ)
 
     if z == TargetZ then
-        log4cc.info("Arrived at z=" .. TargetZ)
+        log4cc.debug("Arrived at z=" .. TargetZ)
         return
     end
 
@@ -47,7 +47,7 @@ function movement.MineToZ(TargetZ)
         movement.DigMove()
         x, y, z = movement.GetPos()
     end
-    log4cc.info("Arrived at z=" .. TargetZ)
+    log4cc.debug("Arrived at z=" .. TargetZ)
 end
 
 function movement.DigStairDown(TargetY, shouldPlace)
@@ -88,18 +88,18 @@ end
 
 function movement.MineToY(TargetY)
     local x, y, z = movement.GetPos()
-    log4cc.info("Currently at y=" .. y)
-    log4cc.info("Going to target y=" .. TargetY)
+    log4cc.debug("Currently at y=" .. y)
+    log4cc.debug("Going to target y=" .. TargetY)
 
     if y == TargetY then
-        log4cc.info("Arrived at y=" .. TargetY)
+        log4cc.debug("Arrived at y=" .. TargetY)
         return
     end
 
     StairDig = y > TargetY and movement.DigStairDown or movement.DigStairUp
     StairDig(TargetY)
 
-    log4cc.info("Arrived at y=" .. TargetY)
+    log4cc.debug("Arrived at y=" .. TargetY)
 end
 
 function movement.MineToXYZ(TargetX, TargetY, TargetZ)
@@ -116,7 +116,7 @@ end
 function movement.GetPos()
     local x, y, z = gps.locate(5, false)
     if not x then
-        log4cc.info("Failed to get my location!")
+        log4cc.debug("Failed to get my location!")
     else
         return math.floor(x), math.floor(y), math.floor(z)
     end
