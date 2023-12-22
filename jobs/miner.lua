@@ -32,7 +32,7 @@ function MineBranchSegment(Orientation)
             turtle.up()
             success, data = turtle.inspectUp()
         end
-        movement.MineToPosition(sx, sy, sz)
+        movement.MineToXYZ(sx, sy, sz)
 
         success, data = turtle.inspectDown()
         while success and resources.OreIDs[data.name] do
@@ -40,7 +40,7 @@ function MineBranchSegment(Orientation)
             turtle.down()
             success, data = turtle.inspectDown()
         end
-        movement.MineToPosition(sx, sy, sz)
+        movement.MineToXYZ(sx, sy, sz)
     end
 
     log4cc.info("\t Returning")
