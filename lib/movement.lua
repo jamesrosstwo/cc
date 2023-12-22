@@ -54,7 +54,7 @@ function movement.DigStairDown(TargetY)
     log4cc.info("Digging stair down")
     x, y, z = movement.GetPos()
     while y > TargetY do
-        movement.DigMove()
+        movement.DigMove(false)
         turtle.digDown()
         turtle.down()
         rotation.TurnRight()
@@ -110,7 +110,11 @@ function movement.GetPos()
     end
 end
 
-function movement.DigMove()
+function movement.DigMove(shouldPlace)
+    if shouldPlace == nil then
+        shouldPlace = true
+    end
+
     inventory.Refuel()
     if turtle.detect() then
         turtle.dig()
@@ -122,8 +126,9 @@ function movement.DigMove()
         turtle.digUp()
     end
     
-    inventory.PlaceDown()
-
+    if shouldPlace then
+        inventory.PlaceDown()
+    end
 end
 
 function movement.ReturnHome()
