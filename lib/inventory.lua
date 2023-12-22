@@ -38,30 +38,34 @@ function inventory.IsFuelSlot(itemName)
     return false
 end
 
+
+function inventory.ItemMatchesSlot(itemName, itemType, slotID)
+    targetSlotType = inventory.slotMap[slotID]
+    return targetSlotType == inventory.anySlot or itemType == targetSlotType or itemName == targetSlotType
+    
+end
+
 function inventory.ManageInventory()
     for slot = 1, 16 do
         turtle.select(slot)
-        local currentSlotType = inventory.slotMap[slot]
         if turtle.getItemCount(slot) > 0 then
             local data = turtle.getItemDetail(slot)
             local foundSlot = false
 
             local itemType = data.name
-
             if resources.ValuableMaterials[itemType] then
                 log4cc.info("Item type " .. itemType .. " is valuable")
                 itemType = "valuable"
             end
 
-            if itemType == currentSlotType then
+            if inventory.ItemMatchesSlot(data.name, itemType, slot) then
                 foundSlot = true
             end
-
 
             if not foundSlot then
                 for targetSlot, targetSlotType in pairs(inventory.slotMap) do
                     log4cc.debug("checking slot " .. slot .. ", " .. targetSlot .. ": " .. targetSlotType .. ", item " .. itemType)
-                    if slot ~= targetSlot and (targetSlotType == inventory.anySlot or itemType == targetSlotType or data.name == targetSlotType) then
+                    if slot ~= targetSlot and inventory.ItemMatchesSlot(data.name, itemType, targetSlot) then
                         if turtle.transferTo(targetSlot) then
                             foundSlot = true
                             break
