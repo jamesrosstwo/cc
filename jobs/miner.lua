@@ -17,6 +17,37 @@ function FindNewPath(StartRange, DesiredAlt)
     movement.MineToXYZ(x + px, DesiredAlt, z + pz)
 end
 
+function movement.MineAdjacentOres()
+    local success, data = turtle.inspectUp()
+    local sx, sy, sz = movement.GetPos()
+    local startRot = rotation.GetOrientation()
+    local reDig = false
+    while success and resources.OreIDs[data.name] do
+        turtle.digUp()
+        turtle.up()
+        success, data = turtle.inspectUp()
+        reDig = true
+    end
+    if reDig then
+        movement.MineToXYZ(sx, sy, sz)
+        rotation.RotateTowards(startRot)
+    end
+
+    success, data = turtle.inspectDown()
+    reDig = false
+    startRot = rotation.GetOrientation()
+    while success and resources.OreIDs[data.name] do
+        turtle.digDown()
+        turtle.down()
+        success, data = turtle.inspectDown()
+        reDig = true
+    end
+    if reDig then
+        movement.MineToXYZ(sx, sy, sz)
+        rotation.RotateTowards(startRot)
+    end
+end
+
 function MineBranchSegment(Orientation)
     log4cc.info("Mining New Branch Segment")
     rotation.RotateTowards(Orientation)
@@ -25,22 +56,7 @@ function MineBranchSegment(Orientation)
     log4cc.info("\t Digging Phase")
     for i = 1, 20 do
         movement.DigMove()
-        local success, data = turtle.inspectUp()
-        local sx, sy, sz = movement.GetPos()
-        while success and resources.OreIDs[data.name] do
-            turtle.digUp()
-            turtle.up()
-            success, data = turtle.inspectUp()
-        end
-        movement.MineToXYZ(sx, sy, sz)
-
-        success, data = turtle.inspectDown()
-        while success and resources.OreIDs[data.name] do
-            turtle.digDown()
-            turtle.down()
-            success, data = turtle.inspectDown()
-        end
-        movement.MineToXYZ(sx, sy, sz)
+        movement.MineAdjacentOres()
     end
 
     log4cc.info("\t Returning")
