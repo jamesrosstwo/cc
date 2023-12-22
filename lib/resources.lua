@@ -23,7 +23,20 @@ resources.OreIDs = {
     ["minecraft:deepslate_redstone_ore"] = true,
 }
 
-resources.altitudes = {
+resources.ValuableMaterials = {
+    "minecraft:raw_iron",
+    "minecraft:raw_copper",
+    "minecraft:raw_gold",
+    "minecraft:diamond",
+    "minecraft:emerald",
+    "minecraft:lapis_lazuli",
+    "minecraft:redstone",
+    "minecraft:coal",
+    "minecraft:quartz",
+    "minecraft:ancient_debris",
+}
+
+resources.Altitudes = {
     diamond = -59,
     iron = 16,
     coal = 40
@@ -31,7 +44,7 @@ resources.altitudes = {
 
 function resources.GetAvailableResources()
     local names = {}
-    for name in pairs(resources.altitudes) do
+    for name in pairs(resources.Altitudes) do
         table.insert(names, name)
     end
     return table.concat(names, ", ")
@@ -39,12 +52,12 @@ end
 
 function resources.GetAltitude(targetResource)
     -- Validate input
-    if not resources.altitudes[targetResource] then
+    if not resources.Altitudes[targetResource] then
         log4cc.info("Invalid resource name. Please enter one of the following: " .. resources.GetAvailableResources())
         return
     end
 
-    return resources.altitudes[targetResource]
+    return resources.Altitudes[targetResource]
 end
 
 return resources

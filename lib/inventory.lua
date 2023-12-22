@@ -1,10 +1,19 @@
 local log4cc = require("lib.log4cc")
+local resources = require("lib.resources")
 local inventory = {}
 
 inventory.slotMap = {
     [1] = "minecraft:coal",
     [2] = "minecraft:cobbled_deepslate",
-    [3] = "minecraft:cobblestone"
+    [3] = "minecraft:cobblestone",
+    [4] = "valuable",
+    [5] = "valuable",
+    [6] = "valuable",
+    [7] = "valuable",
+    [8] = "valuable",
+    [9] = "valuable",
+    [10] = "valuable",
+    [11] = "valuable"
 }
 
 function inventory.IsFuelSlot(itemName)
@@ -28,7 +37,15 @@ function inventory.ManageInventory()
             local foundSlot = false
 
             for targetSlot, itemType in pairs(inventory.slotMap) do
-                if data.name == itemType then
+
+                if itemType == "valuable" and resources.ValuableMaterials[data.name] then
+                    if turtle.getItemSpace(targetSlot) > 0 or slot == targetSlot then
+                        turtle.select(slot)
+                        turtle.transferTo(targetSlot)
+                        foundSlot = true
+                        break
+                    end
+                elseif data.name == itemType then
                     if turtle.getItemSpace(targetSlot) > 0 or slot == targetSlot then
                         turtle.select(slot)
                         turtle.transferTo(targetSlot)
