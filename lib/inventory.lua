@@ -36,21 +36,20 @@ function inventory.ManageInventory()
             local data = turtle.getItemDetail(slot)
             local foundSlot = false
 
-            for targetSlot, itemType in pairs(inventory.slotMap) do
+            local itemType = data.name
+            
+            if resources.ValuableMaterials[itemType] then
+                itemType = "valuable"
+            end
 
-                if itemType == "valuable" and resources.ValuableMaterials[data.name] then
+            for targetSlot, slotType in pairs(inventory.slotMap) do
+                if itemType == slotType then
                     if turtle.getItemSpace(targetSlot) > 0 or slot == targetSlot then
                         turtle.select(slot)
-                        turtle.transferTo(targetSlot)
-                        foundSlot = true
-                        break
-                    end
-                elseif data.name == itemType then
-                    if turtle.getItemSpace(targetSlot) > 0 or slot == targetSlot then
-                        turtle.select(slot)
-                        turtle.transferTo(targetSlot)
-                        foundSlot = true
-                        break
+                        if turtle.transferTo(targetSlot) then
+                            foundSlot = true
+                            break
+                        end
                     end
                 end
             end
