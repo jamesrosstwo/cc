@@ -46,20 +46,20 @@ end
 rotation._orientation = nil  -- Initialize orientation
 function rotation.GetOrientation()
     if rotation._orientation == nil then
-        log4cc.info("current orientation " .. rotation._orientation)
         rotation._orientation = rotation.GetAbsoluteOrientation()
+        log4cc.info("current orientation " .. rotation._orientation)
     end
     return rotation._orientation
 end
 
 function rotation.TurnRight()
     turtle.turnRight()
-    rotation._orientation = rotation._orientation % 4 + 1
+    rotation._orientation = rotation.GetOrientation() % 4 + 1
 end
 
 function rotation.TurnLeft()
     turtle.turnLeft()
-    rotation._orientation = (rotation._orientation + 2) % 4 + 1
+    rotation._orientation = (rotation.GetOrientation() + 2) % 4 + 1
 end
 
 function rotation.RotateTowards(desiredOrientation)
