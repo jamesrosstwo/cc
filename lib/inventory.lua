@@ -68,16 +68,10 @@ end
 
 
 function inventory.Refuel()
-    for slot, itemType in pairs(inventory.slotMap) do
-        if itemType == "minecraft:coal" then
-            turtle.select(slot)
-            while turtle.getItemCount(slot) > 0 and turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) do
-                if not turtle.refuel(1) then
-                    log4cc.warn("Refueling slot " .. slot .. " filled with incorret item")
-                    inventory.ManageInventory()
-                    break
-                end
-            end
+    for slot = 1, 16 do
+        turtle.select(slot)
+        while turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) and turtle.refuel() do
+            inventory.ManageInventory()
         end
     end
 end
