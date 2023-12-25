@@ -105,7 +105,7 @@ end
 function movement.MineToXYZ(TargetX, TargetY, TargetZ)
     log4cc.info("Mining to position " .. utils.CoordString(TargetX, TargetY, TargetZ))
     -- Standardize rotation in order to have uniform stairs
-    rotation.RotateTowards(0)
+    rotation.RotateTowards(1)
     movement.MineToY(TargetY)
     movement.MineToX(TargetX)
     movement.MineToZ(TargetZ)
