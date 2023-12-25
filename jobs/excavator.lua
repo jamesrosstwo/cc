@@ -12,8 +12,8 @@ for i = 1, yRange do
     for j = 1, math.ceil(zRange / 2) do
         local zPos = movement.GetPos()
         movement.MineToPositionHuman(zPos + vector.new(xRange, 0, 0))
-        movement.MineToPositionHuman(zPos + vector.new(xRange, 0, utils.sign(zRange)))
-        movement.MineToPositionHuman(zPos + vector.new(0, 0, utils.sign(zRange)))
+        movement.MineToPositionHuman(zPos + vector.new(xRange, 0, utils.Sign(zRange)))
+        movement.MineToPositionHuman(zPos + vector.new(0, 0, utils.Sign(zRange) * 2))
     end
     movement.MineToPositionHuman(planePos + vector.new(0, -1, 0))
 end
