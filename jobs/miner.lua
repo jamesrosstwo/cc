@@ -106,6 +106,6 @@ if not inHome then
     movement.LeaveHome()
 end
 FindNewPath(explorationRange, resources.GetAltitude(targetResource))
-MineBranches()
+MineBranches(minFuelRatio)
 Dump()
 movement.ReturnHome()

@@ -34,7 +34,8 @@ function inventory.SwapSlots(slotA, slotB, swapSlot)
     turtle.transferTo(slotB)
 end
 
-function inventory.TransferOrDrop(slot)
+function inventory.TransferOrDrop(startSlot, slot)
+    turtle.select(startSlot)
     if not turtle.transferTo(slot) then
         turtle.drop()
     end
@@ -52,22 +53,22 @@ function inventory.ManageInventory()
             local designatedSlot = inventory.designatedSlots[data.name]
             if designatedSlot then
                 inventory.TransferOrDrop(designatedSlot)
-            end
+            else
+                for targetSlot = 3, 15 do
+                    if targetSlot ~= slot then
+                        local targetData = turtle.getItemDetail(targetSlot)
+                        local targetValue = targetData and resources.GetItemValue(targetData.name) or 0
 
-            for targetSlot = 3, 15 do
-                if targetSlot ~= slot then
-                    local targetData = turtle.getItemDetail(targetSlot)
-                    local targetValue = targetData and resources.GetItemValue(targetData.name) or 0
-
-                    if targetValue > highestValue then
-                        highestValue = targetValue
-                        highestValueSlot = targetSlot
+                        if targetValue > highestValue then
+                            highestValue = targetValue
+                            highestValueSlot = targetSlot
+                        end
                     end
                 end
-            end
 
-            if highestValueSlot ~= slot then
-                inventory.SwapSlots(slot, highestValueSlot)
+                if highestValueSlot ~= slot then
+                    inventory.SwapSlots(slot, highestValueSlot)
+                end
             end
         end
     end
@@ -81,7 +82,6 @@ function inventory.ManageInventory()
         end
     end
 end
-
 
 function inventory.Refuel(refuelTo)
     if refuelTo == nil then
