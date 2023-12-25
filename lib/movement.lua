@@ -105,16 +105,11 @@ end
 function movement.MineToXYZHuman(TargetX, TargetY, TargetZ)
     log4cc.info("Mining to position " .. utils.CoordString(TargetX, TargetY, TargetZ))
     local x, y, z = movement.GetXYZ()
-    local redig = y ~= TargetY
+    rotation.RotateTowards((y % 4) + 1)
+    movement.MineToY(TargetY)
     movement.MineToX(TargetX, true)
     movement.MineToZ(TargetZ, true)
     -- Standardize rotation in order to have uniform stairs
-    rotation.RotateTowards((y % 4) + 1)
-    movement.MineToY(TargetY)
-    if redig then
-        movement.MineToX(TargetX, true)
-        movement.MineToZ(TargetZ, true)
-    end
 end
 
 function movement.MineToPositionHuman(pos)

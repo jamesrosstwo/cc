@@ -1,10 +1,10 @@
 local locations = {}
 
-locations.home = vector.new(-22, 62, 211)
+locations.home = vector.new(-106, 57, 209)
 locations.chuteTop = vector.new(-22, 62, 211)
 locations.chestsStart = vector.new(-152, -23, 240)
 locations.numChests = 14
-locations.dumpChest = vector.new(-20, 68, 210)
+locations.dumpChest = vector.new(-112, 57, 204)
 
 -- 7xn grid on xz plane with gaps on the x axis
 function _GenerateChestPositions()
