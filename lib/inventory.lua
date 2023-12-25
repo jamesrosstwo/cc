@@ -124,7 +124,7 @@ function inventory.SuckAll(suckFn)
 end
 
 function inventory.IsFull()
-    for slot = 1, 16 do
+    for slot = 1, 15 do
         turtle.select(slot)
         if turtle.getItemCount() == 0 then
             return false
