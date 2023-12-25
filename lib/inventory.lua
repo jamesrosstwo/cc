@@ -95,19 +95,9 @@ end
 
 function inventory.PlaceDown()
     if not turtle.detectDown() then
-        local deepslateSlot = 3
-        local cobblestoneSlot = 4
-
-        local deepslateCount = turtle.getItemCount(deepslateSlot)
-        local cobblestoneCount = turtle.getItemCount(cobblestoneSlot)
-
-        if deepslateCount > 0 or cobblestoneCount > 0 then
-            local slotToUse = (deepslateCount >= cobblestoneCount) and deepslateSlot or cobblestoneSlot
-            turtle.select(slotToUse)
-            return turtle.placeDown()
-        end
+        turtle.select(inventory.cobbleSlot)
+        return turtle.placeDown()
     end
-
     return false
 end
 
