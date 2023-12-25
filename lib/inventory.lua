@@ -5,13 +5,11 @@ local inventory = {}
 inventory.valuableSlot = "valuable"
 inventory.anySlot = "any"
 
-inventory.coalSlot = 1
-inventory.cobbleSlot = 2
 inventory.swapSlot = 16
 
 inventory.designatedSlots = {
     ["minecraft:coal"] = 1,
-    ["minecraft:cobblestone"] = 15
+    ["minecraft:cobblestone"] = 2
 }
 
 inventory.refuelToRatio = 0.2
@@ -114,7 +112,7 @@ end
 
 function inventory.PlaceDown()
     if not turtle.detectDown() then
-        turtle.select(inventory.cobbleSlot)
+        turtle.select(inventory.designatedSlots["minecraft:cobblestone"])
         return turtle.placeDown()
     end
     return false
@@ -136,20 +134,25 @@ end
 
 function inventory.SuckAll(suckFn)
     for slot = 1, 16 do
-        if not slot == inventory.coalSlot or slot == inventory.swapSlot then
+        if not inventory.designatedSlots[slot] or slot == inventory.swapSlot then
             suckFn()
         end
     end
 end
 
-function inventory.IsFull()
+function inventory.FillLevel()
+    local count = 0
     for slot = 3, 15 do
         turtle.select(slot)
         if turtle.getItemCount() == 0 then
-            return false
+            count = count + 1
         end
     end
-    return true
+    return (1 - count) / 13
+end
+
+function inventory.IsFull()
+    return inventory.FillLevel() >= 0.8
 end
 
 return inventory
