@@ -45,7 +45,7 @@ function inventory.ManageInventory()
         if turtle.getItemCount(slot) > 0 then
             local data = turtle.getItemDetail(slot)
             local highestValueSlot = slot
-            local highestValue = resources.GetItemValue(data.name)
+            local highestValue = data and resources.GetItemValue(data.name) or 0
 
             local designatedSlot = inventory.designatedSlots[data.name]
             if designatedSlot then
@@ -73,7 +73,8 @@ function inventory.ManageInventory()
     for slot = 13, 16 do
         turtle.select(slot)
         local data = turtle.getItemDetail(slot)
-        if resources.GetItemValue(data.name) == 0 then
+        local dataName = data and data.name or "nil"
+        if resources.GetItemValue(dataName) == 0 then
             turtle.drop()
         end
     end
@@ -107,7 +108,7 @@ function inventory.EmptyInventory(dropFn, threshold)
     end
     for slot = 1, 16 do
         local itemDetails = turtle.getItemDetail(slot)
-        local val = resources.GetItemValue(itemDetails.name)
+        local val = itemDetails and resources.GetItemValue(itemDetails.name) or 0
         if val <= threshold then
             turtle.select(slot)
             dropFn()
