@@ -54,7 +54,11 @@ function inventory.ManageInventory()
 
             local designatedSlot = inventory.designatedSlots[data.name]
             if designatedSlot then
-                inventory.TransferOrDrop(designatedSlot)
+                if data.name == "minecraft:coal" then
+                    turtle.transferTo(designatedSlot)
+                else
+                    inventory.TransferOrDrop(designatedSlot)
+                end
             else
                 for targetSlot = 3, 15 do
                     if targetSlot ~= slot then
