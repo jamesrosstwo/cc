@@ -76,6 +76,8 @@ function inventory.Refuel()
         while turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) do
             if turtle.refuel() then
                 inventory.ManageInventory()
+            else
+                break
             end
         end
     end
