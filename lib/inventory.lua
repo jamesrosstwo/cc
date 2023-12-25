@@ -94,7 +94,8 @@ function inventory.Refuel(refuelTo)
         refuelTo = inventory.refuelToRatio
     end
     local fuelLevel = turtle.getFuelLevel()
-    if fuelLevel > fuelLevel * refuelTo then
+    if fuelLevel > turtle.GetFuelLimit() * refuelTo then
+        log4cc.info("Already above capacity")
         return
     end
     for slot = 1, 16 do
