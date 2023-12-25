@@ -75,7 +75,7 @@ function movement.DigStairUp(TargetY, shouldPlace)
     log4cc.info("Digging stair up")
     x, y, z = movement.GetPos()
     while y < TargetY do
-        movement.DigMove()
+        movement.DigMove(false)
         turtle.up()
         turtle.digUp()
         if shouldPlace then

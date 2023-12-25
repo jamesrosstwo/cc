@@ -82,6 +82,9 @@ end
 
 
 function inventory.Refuel()
+    if turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) then
+        return
+    end
     for slot = 1, 16 do
         turtle.select(slot)
         while turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) do
