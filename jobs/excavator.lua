@@ -1,5 +1,6 @@
 local movement = require("lib.movement")
 local utils = require("lib.utils")
+local inventory = require("lib.inventory")
 
 local args = { ... }
 
@@ -14,6 +15,7 @@ for i = 1, yRange do
         movement.MineToPositionHuman(zPos + vector.new(xRange, 0, 0))
         movement.MineToPositionHuman(zPos + vector.new(xRange, 0, utils.Sign(zRange)))
         movement.MineToPositionHuman(zPos + vector.new(0, 0, utils.Sign(zRange) * 2))
+        inventory.ManageInventory()
     end
     movement.MineToPositionHuman(planePos + vector.new(0, -1, 0))
 end
