@@ -23,14 +23,14 @@ function movement.MineToX(TargetX, digHuman)
     rotation.RotateTowards(desiredOrientation)
 
     while utils.Sign(TargetX - x) ~= 0 do
-        movement.DigMove(digHuman)
+        movement.DigMove()
         x, y, z = movement.GetXYZ()
     end
 
     log4cc.debug("Arrived at x=" .. TargetX)
 end
 
-function movement.MineToZ(TargetZ, digHuman)
+function movement.MineToZ(TargetZ)
     local x, y, z = movement.GetXYZ()
     log4cc.debug("Currently at z=" .. z)
     log4cc.debug("Going to target z=" .. TargetZ)
@@ -44,11 +44,31 @@ function movement.MineToZ(TargetZ, digHuman)
     rotation.RotateTowards(desiredOrientation)
 
     while utils.Sign(TargetZ - z) ~= 0 do
-        movement.DigMove(digHuman)
+        movement.DigMove()
         x, y, z = movement.GetXYZ()
     end
     log4cc.debug("Arrived at z=" .. TargetZ)
 end
+
+function movement.DigDownTo(TargetY)
+    x, y, z = movement.GetXYZ()
+    while y > TargetY do
+        turtle.digDown()
+        turtle.down()
+        x, y, z = movement.GetXYZ()
+    end
+end
+
+function movement.DigUpTo(TargetY)
+    log4cc.info("Digging stair up")
+    x, y, z = movement.GetXYZ()
+    while y < TargetY do
+        turtle.up()
+        turtle.digUp()
+        x, y, z = movement.GetXYZ()
+    end
+end
+
 
 function movement.DigStairDown(TargetY, shouldPlace)
     if shouldPlace == nil then
@@ -96,13 +116,13 @@ function movement.MineToY(TargetY)
         return
     end
 
-    StairDig = y > TargetY and movement.DigStairDown or movement.DigStairUp
+    StairDig = y > TargetY and movement.DigDownTo or movement.DigUpTo
     StairDig(TargetY)
 
     log4cc.debug("Arrived at y=" .. TargetY)
 end
 
-function movement.MineToXYZHuman(TargetX, TargetY, TargetZ)
+function movement.MineToXYZ(TargetX, TargetY, TargetZ)
     log4cc.info("Mining to position " .. utils.CoordString(TargetX, TargetY, TargetZ))
     local x, y, z = movement.GetXYZ()
     rotation.RotateTowards((y % 4) + 1)
@@ -112,8 +132,8 @@ function movement.MineToXYZHuman(TargetX, TargetY, TargetZ)
     -- Standardize rotation in order to have uniform stairs
 end
 
-function movement.MineToPositionHuman(pos)
-    movement.MineToXYZHuman(pos.x, pos.y, pos.z)
+function movement.MineToPosition(pos)
+    movement.MineToXYZ(pos.x, pos.y, pos.z)
 end
 
 function movement.GetXYZ()
@@ -130,11 +150,15 @@ function movement.GetPos()
     return vector.new(x, y, z)
 end
 
-function movement.DigMove(shouldPlace, digHuman)
-    if digHuman == nil then
-        digHuman = true
+function movement.DigMove()
+    inventory.Refuel()
+    if turtle.detect() then
+        turtle.dig()
     end
+    turtle.forward()
+end
 
+function movement.DigMoveHuman(shouldPlace)
     if shouldPlace == nil then
         shouldPlace = true
     end
@@ -146,7 +170,7 @@ function movement.DigMove(shouldPlace, digHuman)
 
     turtle.forward()
 
-    if digHuman and turtle.detectUp() then
+    if turtle.detectUp() then
         turtle.digUp()
     end
     
@@ -159,12 +183,12 @@ function movement.ReturnHome()
     log4cc.info("Returning Home")
     local x, y, z = movement.GetXYZ()
     local chuteBase = vector.new(locations.chuteTop.x, y, locations.chuteTop.z)
-    movement.MineToPositionHuman(chuteBase)
-    movement.MineToPositionHuman(locations.chuteTop)
+    movement.MineToPosition(chuteBase)
+    movement.MineToPosition(locations.chuteTop)
     log4cc.info("Dumping items")
-    movement.MineToPositionHuman(locations.dumpChest + vector.new(0, 1, 0))
-    inventory.EmptyInventory(turtle.dropDown)
-    movement.MineToPositionHuman(locations.home)
+    movement.MineToPosition(locations.dumpChest + vector.new(0, 1, 0))
+    inventory.EmptyInventory(turtle.dropDown, 1000)
+    movement.MineToPosition(locations.home)
     rotation.RotateTowards(3) -- +x
 end
 

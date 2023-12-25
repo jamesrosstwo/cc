@@ -12,7 +12,7 @@ function FindNewPath(StartRange, DesiredAlt)
     local pz = math.random(-StartRange, StartRange)
     log4cc.info("Finding new path start: \n\t" .. utils.CoordString(px, pz, DesiredAlt))
     x, y, z = movement.GetXYZ()
-    movement.MineToXYZHuman(x + px, DesiredAlt, z + pz)
+    movement.MineToXYZ(x + px, DesiredAlt, z + pz)
 end
 
 function movement.MineAdjacentOres()
@@ -27,7 +27,7 @@ function movement.MineAdjacentOres()
         reDig = true
     end
     if reDig then
-        movement.MineToXYZHuman(sx, sy, sz)
+        movement.MineToXYZ(sx, sy, sz)
         rotation.RotateTowards(startRot)
     end
 
@@ -41,7 +41,7 @@ function movement.MineAdjacentOres()
         reDig = true
     end
     if reDig then
-        movement.MineToXYZHuman(sx, sy, sz)
+        movement.MineToXYZ(sx, sy, sz)
         rotation.RotateTowards(startRot)
     end
 end
@@ -58,7 +58,7 @@ function MineBranchSegment(Orientation)
     end
 
     log4cc.info("\t Returning")
-    movement.MineToXYZHuman(sx, sy, sz)
+    movement.MineToXYZ(sx, sy, sz)
     rotation.RotateTowards(Orientation)
 
     log4cc.info("Extending for new branch")
