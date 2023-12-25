@@ -22,17 +22,20 @@ resources.OreIDs = {
     ["minecraft:deepslate_iron_ore"] = true,
     ["minecraft:deepslate_lapis_ore"] = true,
     ["minecraft:deepslate_redstone_ore"] = true,
+    ["thermalfoundation:ore"] = true,
+    ["ic2:resource"] = true,
+    ["appliedenergistics2:material"] = true,
+    ["mysticalagriculture:crafting"] = true,
 }
 
 resources.ItemValues = {
-    ["minecraft:raw_copper"] = 2,
     ["minecraft:coal"] = 3,
-    ["minecraft:raw_iron"] = 3,
+    ["minecraft:iron_ore"] = 3,
     ["minecraft:redstone"] = 4,
     ["minecraft:quartz"] = 4,
     ["minecraft:lapis_lazuli"] = 5,
     ["thermalfoundation:ore"] = 5,
-    ["minecraft:raw_gold"] = 6,
+    ["minecraft:gold_ore"] = 6,
     ["ic2:resource"] = 6,
     ["appliedenergistics2:material"] = 6,
     ["mysticalagriculture:crafting"] = 6,
