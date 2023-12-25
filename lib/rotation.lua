@@ -43,9 +43,12 @@ function rotation.GetAbsoluteOrientation()
 end
 
 
-rotation._orientation = rotation.GetAbsoluteOrientation()  -- Initialize orientation
-log4cc.info("current orientation " .. rotation._orientation)
+rotation._orientation = nil  -- Initialize orientation
 function rotation.GetOrientation()
+    if rotation._orientation == nil then
+        log4cc.info("current orientation " .. rotation._orientation)
+        rotation._orientation = rotation.GetAbsoluteOrientation()
+    end
     return rotation._orientation
 end
 

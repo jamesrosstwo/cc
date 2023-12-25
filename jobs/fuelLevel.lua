@@ -1,0 +1,1 @@
+print("Current: " .. turtle.getFuelLevel() .. ", Max: " .. turtle.getFuelLimit())
