@@ -158,7 +158,7 @@ end
 function movement.ReturnHome()
     log4cc.info("Returning Home")
     local x, y, z = movement.GetXYZ()
-    local chuteBase = vectors.new(locations.chuteTop.x, y, locations.chuteTop.z)
+    local chuteBase = vector.new(locations.chuteTop.x, y, locations.chuteTop.z)
     movement.MineToPositionHuman(chuteBase)
     movement.MineToPositionHuman(locations.chuteTop)
     log4cc.info("Dumping items")
