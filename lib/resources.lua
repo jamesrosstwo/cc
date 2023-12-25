@@ -37,6 +37,10 @@ resources.ItemValues = {
     ["minecraft:ancient_debris"] = 12
 }
 
+function resources.GetItemValues()
+    return itemValues[itemName] or 0
+end
+
 
 resources.Altitudes = {
     diamond = 11,
