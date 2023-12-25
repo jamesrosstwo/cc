@@ -148,7 +148,7 @@ function inventory.FillLevel()
             count = count + 1
         end
     end
-    return (1 - count) / 13
+    return (13 - count) / 13
 end
 
 function inventory.IsFull()
