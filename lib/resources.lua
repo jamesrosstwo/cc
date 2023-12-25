@@ -25,17 +25,22 @@ resources.OreIDs = {
 }
 
 resources.ItemValues = {
-    ["minecraft:raw_iron"] = 3,
     ["minecraft:raw_copper"] = 2,
-    ["minecraft:raw_gold"] = 4,
-    ["minecraft:diamond"] = 10,
-    ["minecraft:emerald"] = 9,
-    ["minecraft:lapis_lazuli"] = 5,
+    ["minecraft:coal"] = 3,
+    ["minecraft:raw_iron"] = 3,
     ["minecraft:redstone"] = 4,
-    ["minecraft:coal"] = 1,
-    ["minecraft:quartz"] = 3,
+    ["minecraft:quartz"] = 4,
+    ["minecraft:lapis_lazuli"] = 5,
+    ["thermalfoundation:ore"] = 5,
+    ["minecraft:raw_gold"] = 6,
+    ["ic2:resource"] = 6,
+    ["appliedenergistics2:material"] = 6,
+    ["mysticalagriculture:crafting"] = 6,
+    ["minecraft:emerald"] = 9,
+    ["minecraft:diamond"] = 10,
     ["minecraft:ancient_debris"] = 12
 }
+
 
 function resources.GetItemValue(itemName)
     return resources.ItemValues[itemName] or 0
