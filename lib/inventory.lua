@@ -5,83 +5,67 @@ local inventory = {}
 inventory.valuableSlot = "valuable"
 inventory.anySlot = "any"
 
-inventory.slotMap = {
-    [1] = "minecraft:coal",
-    [2] = "minecraft:cobbled_deepslate",
-    [3] = "minecraft:cobblestone",
-    [4] = inventory.valuableSlot,
-    [5] = inventory.valuableSlot,
-    [6] = inventory.valuableSlot,
-    [7] = inventory.valuableSlot,
-    [8] = inventory.valuableSlot,
-    [9] = inventory.valuableSlot,
-    [10] = inventory.valuableSlot,
-    [11] = inventory.valuableSlot,
-    [12] = inventory.valuableSlot,
-    [13] = inventory.anySlot,
-    [14] = inventory.anySlot,
-    [15] = inventory.anySlot,
-    [16] = inventory.anySlot
-}
+inventory.coalSlot = 1
+inventory.swapSlot = 16
 
-function inventory.IsFuelSlot(itemName)
-    local fuelItems = {
-        "minecraft:coal",
-    }
-
-    for _, fuelItem in pairs(fuelItems) do
-        if itemName == fuelItem then
-            return true
-        end
-    end
-
-    return false
+function inventory.GetItemValue(itemName)
+    return resources.ItemValues[itemName] or 0
 end
 
+function inventory.SwapSlots(slotA, slotB, swapSlot)
+    if swapSlot == nil then
+        swapSlot = inventory.swapSlot
+    end
 
-function inventory.ItemMatchesSlot(itemName, itemType, slotID)
-    targetSlotType = inventory.slotMap[slotID]
-    return targetSlotType == inventory.anySlot or itemType == targetSlotType or itemName == targetSlotType
-    
+    turtle.select(inventory.swapSlot)
+    if turtle.getItemCount() > 0 then
+        turtle.drop()
+    end
+
+    turtle.select(slotA)
+    turtle.transferTo(inventory.swapSlot)
+    turtle.select(slotB)
+    turtle.transferTo(slotA)
+    turtle.select(inventory.swapSlot)
+    turtle.transferTo(slotB)
 end
 
 function inventory.ManageInventory()
-    for slot = 1, 16 do
+    -- Reserve slot 1 for coal, and slot 16 for swapping
+    for slot = 2, 15 do
         turtle.select(slot)
         if turtle.getItemCount(slot) > 0 then
             local data = turtle.getItemDetail(slot)
-            local foundSlot = false
+            local highestValueSlot = slot
+            local highestValue = resources.GetItemValue(data.name)
 
-            local itemType = data.name
-            if resources.ValuableMaterials[itemType] then
-                log4cc.info("Item type " .. itemType .. " is valuable")
-                itemType = "valuable"
-            end
+            for targetSlot = 2, 15 do
+                if targetSlot ~= slot then
+                    local targetData = turtle.getItemDetail(targetSlot)
+                    local targetValue = targetData and resources.GetItemValue(targetData.name) or 0
 
-            if inventory.ItemMatchesSlot(data.name, itemType, slot) then
-                foundSlot = true
-            end
-
-            if not foundSlot then
-                for targetSlot, targetSlotType in pairs(inventory.slotMap) do
-                    log4cc.debug("checking slot " .. slot .. ", " .. targetSlot .. ": " .. targetSlotType .. ", item " .. itemType)
-                    if slot ~= targetSlot and inventory.ItemMatchesSlot(data.name, itemType, targetSlot) then
-                        if turtle.transferTo(targetSlot) then
-                            foundSlot = true
-                            break
-                        end
+                    if targetValue > highestValue then
+                        highestValue = targetValue
+                        highestValueSlot = targetSlot
                     end
                 end
             end
 
-            -- Drop items if they don't fit in their designated slots
-            if not foundSlot then
-                turtle.select(slot)
-                turtle.drop()
+            if highestValueSlot ~= slot then
+                inventory.SwapSlots(slot, highestValueSlot)
             end
         end
     end
+
+    for slot = 13, 16 do
+        turtle.select(slot)
+        local data = turtle.getItemDetail(slot)
+        if resources.GetItemValue(data.name) == 0 then
+            turtle.drop()
+        end
+    end
 end
+
 
 function inventory.Refuel()
     for slot, itemType in pairs(inventory.slotMap) do

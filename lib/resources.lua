@@ -1,6 +1,7 @@
 local log4cc = require("lib.log4cc")
 local resources = {}
 
+resources.coal = "minecraft:coal"
 
 resources.OreIDs = {
     ["minecraft:gold_ore"] = true,
@@ -23,23 +24,24 @@ resources.OreIDs = {
     ["minecraft:deepslate_redstone_ore"] = true,
 }
 
-resources.ValuableMaterials = {
-    ["minecraft:raw_iron"] = true,
-    ["minecraft:raw_copper"] = true,
-    ["minecraft:raw_gold"] = true,
-    ["minecraft:diamond"] = true,
-    ["minecraft:emerald"] = true,
-    ["minecraft:lapis_lazuli"] = true,
-    ["minecraft:redstone"] = true,
-    ["minecraft:coal"] = true,
-    ["minecraft:quartz"] = true,
-    ["minecraft:ancient_debris"] = true
+resources.ItemValues = {
+    ["minecraft:raw_iron"] = 3,
+    ["minecraft:raw_copper"] = 2,
+    ["minecraft:raw_gold"] = 4,
+    ["minecraft:diamond"] = 10,
+    ["minecraft:emerald"] = 9,
+    ["minecraft:lapis_lazuli"] = 5,
+    ["minecraft:redstone"] = 4,
+    ["minecraft:coal"] = 1,
+    ["minecraft:quartz"] = 3,
+    ["minecraft:ancient_debris"] = 12
 }
 
+
 resources.Altitudes = {
-    diamond = -59,
-    iron = 16,
-    coal = 40
+    diamond = 11,
+    iron = 45,
+    coal = 25
 }
 
 function resources.GetAvailableResources()

@@ -1,5 +1,6 @@
 local rotation = {}
 local log4cc = require("lib.log4cc")
+local inventory = require("lib.inventory")
 
 
 --[[orientation will be:
@@ -9,6 +10,7 @@ local log4cc = require("lib.log4cc")
 + z = 4
 ]]--
 function rotation.GetAbsoluteOrientation()
+    inventory.Refuel()
     local x1, y1, z1 = gps.locate()
     local blockDetected = turtle.detect()
 
@@ -35,6 +37,7 @@ function rotation.GetAbsoluteOrientation()
     elseif z2 < z1 then
         return 2 -- -z
     else
+        log4cc.error("No change in position detected")
         return nil, "No change in position detected"
     end
 end
