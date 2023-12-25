@@ -94,27 +94,23 @@ function inventory.PlaceDown()
     return false
 end
 
-function inventory.EmptyInventory(dropFn)
+function inventory.EmptyInventory(dropFn, threshold)
+    if threshold == nil then
+        threshold = 0
+    end
     for slot = 1, 16 do
         local itemDetails = turtle.getItemDetail(slot)
-        if itemDetails then
-            local itemFound = false
-            for targetSlot, itemType in pairs(inventory.slotMap) do
-                if itemDetails.name == itemType then
-                    itemFound = true
-                    break
-                end
-            end
-            if not itemFound then
-                dropFn()
-            end
+        local val = resources.GetItemValue(itemDetails.name)
+        if val <= threshold then
+            turtle.select(slot)
+            turtle.drop()
         end
     end
 end
 
 function inventory.SuckAll(suckFn)
     for slot = 1, 16 do
-        if not inventory.IsFuelSlot(inventory.slotMap[slot]) then
+        if not slot == inventory.coalSlot or slot == inventory.swapSlot then
             suckFn()
         end
     end
