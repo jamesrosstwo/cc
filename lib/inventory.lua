@@ -6,7 +6,7 @@ inventory.valuableSlot = "valuable"
 inventory.anySlot = "any"
 
 inventory.coalSlot = 1
-inventory.cobbleSlot = 15
+inventory.cobbleSlot = 2
 inventory.swapSlot = 16
 
 inventory.designatedSlots = {
@@ -40,7 +40,7 @@ end
 
 function inventory.ManageInventory()
     -- Reserve slot 1 for coal, and slot 16 for swapping
-    for slot = 2, 14 do
+    for slot = 3, 15 do
         turtle.select(slot)
         if turtle.getItemCount(slot) > 0 then
             local data = turtle.getItemDetail(slot)
@@ -52,7 +52,7 @@ function inventory.ManageInventory()
                 inventory.TransferOrDrop(designatedSlot)
             end
 
-            for targetSlot = 2, 14 do
+            for targetSlot = 3, 15 do
                 if targetSlot ~= slot then
                     local targetData = turtle.getItemDetail(targetSlot)
                     local targetValue = targetData and resources.GetItemValue(targetData.name) or 0
