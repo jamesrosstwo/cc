@@ -157,16 +157,15 @@ end
 
 function movement.ReturnHome()
     log4cc.info("Returning Home")
+    local x, y, z = movement.GetXYZ()
+    local chuteBase = vectors.new(locations.chuteTop.x, y, locations.chuteTop.z)
+    movement.MineToPositionHuman(chuteBase)
     movement.MineToPositionHuman(locations.chuteTop)
+    log4cc.info("Dumping items")
+    movement.MineToPositionHuman(locations.dumpChest + vector.new(0, 1, 0))
+    inventory.EmptyInventory(turtle.dropDown)
+    movement.MineToPositionHuman(locations.home)
     rotation.RotateTowards(3) -- +x
-    while not turtle.detectDown() do
-        turtle.down()
-    end
-end
-
-function movement.LeaveHome()
-    log4cc.info("Leaving Home")
-    movement.MineToPositionHuman(locations.chuteTop)
 end
 
 return movement

@@ -81,31 +81,14 @@ function MineBranches(endRatio)
     log4cc.info("Fuel low. Ending branch mining.")
 end
 
-function Dump()
-    log4cc.info("Dumping items")
-    movement.MineToPositionHuman(locations.dumpChest + vector.new(0, 1, 0))
-    inventory.EmptyInventory(turtle.dropDown)
-end
-
-
 -- Main execution
 local args = {...}
 local targetResource = args[1] or "diamond"
+local explorationRange = tonumber(args[2]) or 10
+local minFuelRatio = tonumber(args[3]) 0.1
 
-local inHome = false
-if args[2] ~= nil then
-    inHome = args[2] == "true"
-end
-
-local explorationRange = tonumber(args[3]) or 10
-local minFuelRatio = 0.1
-
-
+inventory.Refuel()
 log4cc.info("Beginning Mining Operation for " .. targetResource)
-if not inHome then
-    movement.LeaveHome()
-end
 FindNewPath(explorationRange, resources.GetAltitude(targetResource))
 MineBranches(minFuelRatio)
-Dump()
 movement.ReturnHome()
