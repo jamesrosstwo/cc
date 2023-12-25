@@ -69,10 +69,10 @@ function MineBranchSegment(Orientation)
     inventory.ManageInventory()
 end
 
-function MineBranches()
+function MineBranches(endRatio)
     log4cc.info("Beginning to mine branches.")
     local StartOrientation = rotation.GetOrientation()
-    while turtle.getFuelLevel() >= (turtle.getFuelLimit() / 10) do
+    while turtle.getFuelLevel() >= (turtle.getFuelLimit() * endRatio) do
         MineBranchSegment(StartOrientation)
         if inventory.IsFull() then
             return
@@ -98,6 +98,7 @@ if args[2] ~= nil then
 end
 
 local explorationRange = tonumber(args[3]) or 10
+local minFuelRatio = 0.1
 
 
 log4cc.info("Beginning Mining Operation for " .. targetResource)

@@ -14,6 +14,8 @@ inventory.designatedSlots = {
     ["minecraft:cobblestone"] = 15
 }
 
+inventory.refuelToRatio = 0.2
+
 function inventory.SwapSlots(slotA, slotB, swapSlot)
     if swapSlot == nil then
         swapSlot = inventory.swapSlot
@@ -81,18 +83,23 @@ function inventory.ManageInventory()
 end
 
 
-function inventory.Refuel()
-    if turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) then
+function inventory.Refuel(refuelTo)
+    if refuelTo == nil then
+        refuelTo = inventory.refuelToRatio
+    end
+    local fuelLevel = turtle.getFuelLevel()
+    if fuelLevel > fuelLevel * refuelTo then
         return
     end
     for slot = 1, 16 do
         turtle.select(slot)
-        while turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) do
-            if turtle.refuel() then
-                inventory.ManageInventory()
-            else
+        while fuelLevel < fuelLevel * refuelTo do
+            if not turtle.refuel() then
                 break
             end
+
+            inventory.ManageInventory()
+            fuelLevel = turtle.getFuelLevel()
         end
     end
 end
