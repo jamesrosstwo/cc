@@ -34,8 +34,10 @@ function inventory.SwapSlots(slotA, slotB, swapSlot)
     turtle.transferTo(slotB)
 end
 
-function inventory.TransferOrDrop(startSlot, slot)
-    turtle.select(startSlot)
+function inventory.TransferOrDrop(slot, startSlot)
+    if startSlot ~= nil then
+        turtle.select(startSlot)
+    end
     if not turtle.transferTo(slot) then
         turtle.drop()
     end
