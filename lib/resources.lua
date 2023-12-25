@@ -37,7 +37,7 @@ resources.ItemValues = {
     ["minecraft:ancient_debris"] = 12
 }
 
-function resources.GetItemValues(itemName)
+function resources.GetItemValue(itemName)
     return resources.ItemValues[itemName] or 0
 end
 

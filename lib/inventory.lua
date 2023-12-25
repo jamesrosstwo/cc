@@ -8,10 +8,6 @@ inventory.anySlot = "any"
 inventory.coalSlot = 1
 inventory.swapSlot = 16
 
-function inventory.GetItemValue(itemName)
-    return resources.ItemValues[itemName] or 0
-end
-
 function inventory.SwapSlots(slotA, slotB, swapSlot)
     if swapSlot == nil then
         swapSlot = inventory.swapSlot
