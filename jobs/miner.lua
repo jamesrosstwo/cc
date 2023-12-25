@@ -1,10 +1,14 @@
+local inventory = require("lib.inventory")
+inventory.Refuel()
+
+
 local log4cc = require("lib.log4cc")
 local movement = require("lib.movement")
 local rotation = require("lib.rotation")
 local utils = require("lib.utils")
 local resources = require("lib.resources")
 local locations = require("lib.locations")
-local inventory = require("lib.inventory")
+
 
 function FindNewPath(StartRange, DesiredAlt)
     local px = math.random(-StartRange, StartRange)
@@ -85,9 +89,8 @@ end
 local args = {...}
 local targetResource = args[1] or "diamond"
 local explorationRange = tonumber(args[2]) or 10
-local minFuelRatio = tonumber(args[3]) 0.1
+local minFuelRatio = tonumber(args[3]) or 0.1
 
-inventory.Refuel()
 log4cc.info("Beginning Mining Operation for " .. targetResource)
 FindNewPath(explorationRange, resources.GetAltitude(targetResource))
 MineBranches(minFuelRatio)
