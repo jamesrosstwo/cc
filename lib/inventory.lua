@@ -6,6 +6,7 @@ inventory.valuableSlot = "valuable"
 inventory.anySlot = "any"
 
 inventory.coalSlot = 1
+inventory.cobbleSlot = 15
 inventory.swapSlot = 16
 
 function inventory.SwapSlots(slotA, slotB, swapSlot)
@@ -28,14 +29,20 @@ end
 
 function inventory.ManageInventory()
     -- Reserve slot 1 for coal, and slot 16 for swapping
-    for slot = 2, 15 do
-        turtle.select(slot)
+    for slot = 2, 14 do
         if turtle.getItemCount(slot) > 0 then
             local data = turtle.getItemDetail(slot)
             local highestValueSlot = slot
             local highestValue = resources.GetItemValue(data.name)
 
-            for targetSlot = 2, 15 do
+            if data.name == "minecraft:cobblestone" then
+                turtle.select(slot)
+                if not turtle.transferTo(cobbleSlot) then
+                    turtle.drop()
+                end
+            end
+
+            for targetSlot = 2, 14 do
                 if targetSlot ~= slot then
                     local targetData = turtle.getItemDetail(targetSlot)
                     local targetValue = targetData and resources.GetItemValue(targetData.name) or 0
@@ -66,8 +73,10 @@ end
 function inventory.Refuel()
     for slot = 1, 16 do
         turtle.select(slot)
-        while turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) and turtle.refuel() do
-            inventory.ManageInventory()
+        while turtle.getFuelLevel() < (turtle.getFuelLimit() / 5) do
+            if turtle.refuel() then
+                inventory.ManageInventory()
+            end
         end
     end
 end
@@ -99,7 +108,7 @@ function inventory.EmptyInventory(dropFn, threshold)
         local val = resources.GetItemValue(itemDetails.name)
         if val <= threshold then
             turtle.select(slot)
-            turtle.drop()
+            dropFn()
         end
     end
 end
