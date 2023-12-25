@@ -9,6 +9,11 @@ inventory.coalSlot = 1
 inventory.cobbleSlot = 15
 inventory.swapSlot = 16
 
+inventory.designatedSlots = {
+    ["minecraft:coal"] = 1,
+    ["minecraft:cobblestone"] = 15
+}
+
 function inventory.SwapSlots(slotA, slotB, swapSlot)
     if swapSlot == nil then
         swapSlot = inventory.swapSlot
@@ -27,19 +32,24 @@ function inventory.SwapSlots(slotA, slotB, swapSlot)
     turtle.transferTo(slotB)
 end
 
+function inventory.TransferOrDrop(slot)
+    if not turtle.transferTo(slot) then
+        turtle.drop()
+    end
+end
+
 function inventory.ManageInventory()
     -- Reserve slot 1 for coal, and slot 16 for swapping
     for slot = 2, 14 do
+        turtle.select(slot)
         if turtle.getItemCount(slot) > 0 then
             local data = turtle.getItemDetail(slot)
             local highestValueSlot = slot
             local highestValue = resources.GetItemValue(data.name)
 
-            if data.name == "minecraft:cobblestone" then
-                turtle.select(slot)
-                if not turtle.transferTo(cobbleSlot) then
-                    turtle.drop()
-                end
+            local designatedSlot = inventory.designatedSlots[data.name]
+            if designatedSlot then
+                inventory.TransferOrDrop(designatedSlot)
             end
 
             for targetSlot = 2, 14 do
