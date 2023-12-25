@@ -1,5 +1,6 @@
 jobs/chestHandler.lua
 jobs/cobbleDig.lua
+jobs/excavator.lua
 jobs/miner.lua
 lib/inventory.lua
 lib/locations.lua

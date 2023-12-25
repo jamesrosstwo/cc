@@ -5,8 +5,8 @@ local locations = require("lib.locations")
 local utils    = require("lib.utils")
 local movement = {}
 
-function movement.MineToX(TargetX)
-    local x, y, z = movement.GetPos()
+function movement.MineToX(TargetX, digHuman)
+    local x, y, z = movement.GetXYZ()
     log4cc.debug("Currently at x=" .. x)
     log4cc.debug("Going to target x=" .. TargetX)
 
@@ -23,15 +23,15 @@ function movement.MineToX(TargetX)
     rotation.RotateTowards(desiredOrientation)
 
     while utils.Sign(TargetX - x) ~= 0 do
-        movement.DigMove()
-        x, y, z = movement.GetPos()
+        movement.DigMove(digHuman)
+        x, y, z = movement.GetXYZ()
     end
 
     log4cc.debug("Arrived at x=" .. TargetX)
 end
 
-function movement.MineToZ(TargetZ)
-    local x, y, z = movement.GetPos()
+function movement.MineToZ(TargetZ, digHuman)
+    local x, y, z = movement.GetXYZ()
     log4cc.debug("Currently at z=" .. z)
     log4cc.debug("Going to target z=" .. TargetZ)
 
@@ -44,8 +44,8 @@ function movement.MineToZ(TargetZ)
     rotation.RotateTowards(desiredOrientation)
 
     while utils.Sign(TargetZ - z) ~= 0 do
-        movement.DigMove()
-        x, y, z = movement.GetPos()
+        movement.DigMove(digHuman)
+        x, y, z = movement.GetXYZ()
     end
     log4cc.debug("Arrived at z=" .. TargetZ)
 end
@@ -55,7 +55,7 @@ function movement.DigStairDown(TargetY, shouldPlace)
         shouldPlace = true
     end
     log4cc.info("Digging stair down")
-    x, y, z = movement.GetPos()
+    x, y, z = movement.GetXYZ()
     while y > TargetY do
         movement.DigMove(false)
         turtle.digDown()
@@ -64,7 +64,7 @@ function movement.DigStairDown(TargetY, shouldPlace)
             inventory.PlaceDown()
         end
         rotation.TurnRight()
-        x, y, z = movement.GetPos()
+        x, y, z = movement.GetXYZ()
     end
 end
 
@@ -73,7 +73,7 @@ function movement.DigStairUp(TargetY, shouldPlace)
         shouldPlace = true
     end
     log4cc.info("Digging stair up")
-    x, y, z = movement.GetPos()
+    x, y, z = movement.GetXYZ()
     while y < TargetY do
         movement.DigMove(false)
         turtle.up()
@@ -82,12 +82,12 @@ function movement.DigStairUp(TargetY, shouldPlace)
             inventory.PlaceDown()
         end
         rotation.TurnLeft()
-        x, y, z = movement.GetPos()
+        x, y, z = movement.GetXYZ()
     end
 end
 
 function movement.MineToY(TargetY)
-    local x, y, z = movement.GetPos()
+    local x, y, z = movement.GetXYZ()
     log4cc.debug("Currently at y=" .. y)
     log4cc.debug("Going to target y=" .. TargetY)
 
@@ -102,21 +102,21 @@ function movement.MineToY(TargetY)
     log4cc.debug("Arrived at y=" .. TargetY)
 end
 
-function movement.MineToXYZ(TargetX, TargetY, TargetZ)
+function movement.MineToXYZHuman(TargetX, TargetY, TargetZ)
     log4cc.info("Mining to position " .. utils.CoordString(TargetX, TargetY, TargetZ))
-    local x, y, z = movement.GetPos()
-    movement.MineToX(TargetX)
-    movement.MineToZ(TargetZ)
+    local x, y, z = movement.GetXYZ()
+    movement.MineToX(TargetX, true)
+    movement.MineToZ(TargetZ, true)
     -- Standardize rotation in order to have uniform stairs
     rotation.RotateTowards((y % 4) + 1)
     movement.MineToY(TargetY)
 end
 
-function movement.MineToPosition(pos)
-    movement.MineToXYZ(pos.x, pos.y, pos.z)
+function movement.MineToPositionHuman(pos)
+    movement.MineToXYZHuman(pos.x, pos.y, pos.z)
 end
 
-function movement.GetPos()
+function movement.GetXYZ()
     local x, y, z = gps.locate(5, false)
     if not x then
         log4cc.debug("Failed to get my location!")
@@ -125,7 +125,16 @@ function movement.GetPos()
     end
 end
 
-function movement.DigMove(shouldPlace)
+function movement.GetPos()
+    local x, y, z = movement.GetXYZ()
+    return vector.new(x, y, z)
+end
+
+function movement.DigMove(shouldPlace, digHuman)
+    if digHuman == nil then
+        digHuman = true
+    end
+
     if shouldPlace == nil then
         shouldPlace = true
     end
@@ -137,7 +146,7 @@ function movement.DigMove(shouldPlace)
 
     turtle.forward()
 
-    if turtle.detectUp() then
+    if digHuman and turtle.detectUp() then
         turtle.digUp()
     end
     
@@ -148,7 +157,7 @@ end
 
 function movement.ReturnHome()
     log4cc.info("Returning Home")
-    movement.MineToPosition(locations.chuteTop)
+    movement.MineToPositionHuman(locations.chuteTop)
     rotation.RotateTowards(3) -- +x
     while not turtle.detectDown() do
         turtle.down()
@@ -157,7 +166,7 @@ end
 
 function movement.LeaveHome()
     log4cc.info("Leaving Home")
-    movement.MineToPosition(locations.chuteTop)
+    movement.MineToPositionHuman(locations.chuteTop)
 end
 
 return movement

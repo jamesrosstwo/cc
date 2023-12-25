@@ -26,7 +26,7 @@ function DumpItems()
                 local firstLetters = itemName:sub(1, 3) 
                 local chestIndex = (firstLetters:byte() % numChests) + 1 
 
-                movement.MineToPosition(locations.chests[chestIndex])
+                movement.MineToPositionHuman(locations.chests[chestIndex])
                 turtle.select(slot)
                 turtle.dropDown()
             end
@@ -35,9 +35,9 @@ function DumpItems()
 end
 
 
-movement.MineToPosition(startLoc)
+movement.MineToPositionHuman(startLoc)
 while true do
-    movement.MineToPosition(locations.dumpChest + vector.new(-1, 1, 0))
+    movement.MineToPositionHuman(locations.dumpChest + vector.new(-1, 1, 0))
     inventory.SuckAll(turtle.suckDown)
     inventory.ManageInventory()
     DumpItems()

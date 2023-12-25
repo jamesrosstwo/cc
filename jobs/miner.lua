@@ -10,13 +10,13 @@ function FindNewPath(StartRange, DesiredAlt)
     local px = math.random(-StartRange, StartRange)
     local pz = math.random(-StartRange, StartRange)
     log4cc.info("Finding new path start: \n\t" .. utils.CoordString(px, pz, DesiredAlt))
-    x, y, z = movement.GetPos()
-    movement.MineToXYZ(x + px, DesiredAlt, z + pz)
+    x, y, z = movement.GetXYZ()
+    movement.MineToXYZHuman(x + px, DesiredAlt, z + pz)
 end
 
 function movement.MineAdjacentOres()
     local success, data = turtle.inspectUp()
-    local sx, sy, sz = movement.GetPos()
+    local sx, sy, sz = movement.GetXYZ()
     local startRot = rotation.GetOrientation()
     local reDig = false
     while success and resources.OreIDs[data.name] do
@@ -26,7 +26,7 @@ function movement.MineAdjacentOres()
         reDig = true
     end
     if reDig then
-        movement.MineToXYZ(sx, sy, sz)
+        movement.MineToXYZHuman(sx, sy, sz)
         rotation.RotateTowards(startRot)
     end
 
@@ -40,7 +40,7 @@ function movement.MineAdjacentOres()
         reDig = true
     end
     if reDig then
-        movement.MineToXYZ(sx, sy, sz)
+        movement.MineToXYZHuman(sx, sy, sz)
         rotation.RotateTowards(startRot)
     end
 end
@@ -48,7 +48,7 @@ end
 function MineBranchSegment(Orientation)
     log4cc.info("Mining New Branch Segment")
     rotation.RotateTowards(Orientation)
-    local sx, sy, sz = movement.GetPos()
+    local sx, sy, sz = movement.GetXYZ()
 
     log4cc.info("\t Digging Phase")
     for i = 1, 20 do
@@ -57,7 +57,7 @@ function MineBranchSegment(Orientation)
     end
 
     log4cc.info("\t Returning")
-    movement.MineToXYZ(sx, sy, sz)
+    movement.MineToXYZHuman(sx, sy, sz)
     rotation.RotateTowards(Orientation)
 
     log4cc.info("Extending for new branch")
@@ -83,7 +83,7 @@ end
 
 function Dump()
     log4cc.info("Dumping items")
-    movement.MineToPosition(locations.dumpChest + vector.new(0, 1, 0))
+    movement.MineToPositionHuman(locations.dumpChest + vector.new(0, 1, 0))
     inventory.EmptyInventory(turtle.dropDown)
 end
 
